@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Filters from './../Filters';
+import MoviesList from './../Movies/MoviesList';
 
 class App extends Component {
   render() {
@@ -14,7 +15,9 @@ class App extends Component {
               </div>
             </div>
           </div>
-          <div className="col-8"></div>
+          <div className="col-8">
+            <MoviesList />
+          </div>
         </div>
       </div>
     );
