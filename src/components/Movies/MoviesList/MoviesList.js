@@ -12,10 +12,8 @@ export default class MovieList extends Component {
     };
   }
 
-  componentDidMount() {
-    const {
-      filters: { sort_by },
-    } = this.props;
+  getMovies = filters => {
+    const { sort_by } = filters;
     const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}`;
     fetch(link)
       .then(response => {
@@ -26,6 +24,16 @@ export default class MovieList extends Component {
           movies: data.results,
         });
       });
+  };
+
+  componentDidMount() {
+    this.getMovies(this.props.filters);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.filters.sort_by !== prevProps.filters.sort_by) {
+      this.getMovies(this.props.filters);
+    }
   }
 
   render() {
