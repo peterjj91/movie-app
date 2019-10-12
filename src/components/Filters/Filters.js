@@ -5,7 +5,9 @@ export default class Filters extends React.Component {
   render() {
     const {
       filters: { sort_by },
+      page,
       onChangeFilters,
+      onChangePage,
     } = this.props;
     return (
       <form className="mb-3">
@@ -24,6 +26,23 @@ export default class Filters extends React.Component {
             <option value="vote_average.asc">Рейтинг по возростанию</option>
           </select>
         </div>
+        <div className="btn-group">
+          <button
+            type="button"
+            className="btn btn-light"
+            disabled={page === 1}
+            onClick={onChangePage.bind(null, page - 1)}
+          >
+            Назад
+          </button>
+          <button
+            type="button"
+            className="btn btn-light"
+            onClick={onChangePage.bind(null, page + 1)}
+          >
+            Вперед
+          </button>
+        </div>
       </form>
     );
   }
@@ -33,4 +52,6 @@ Filters.propTypes = {
   onChangeFilters: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   sort_by: PropTypes.string,
+  page: PropTypes.number,
+  onChangePage: PropTypes.func,
 };
