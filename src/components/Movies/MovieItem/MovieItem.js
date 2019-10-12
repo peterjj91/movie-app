@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class MovieItem extends Component {
+  static propTypes = {
+    item: PropTypes.object.isRequired,
+  };
+
   render() {
     const { item } = this.props;
     return (
@@ -20,7 +24,3 @@ export default class MovieItem extends Component {
     );
   }
 }
-
-MovieItem.propTypes = {
-  item: PropTypes.object.isRequired,
-};

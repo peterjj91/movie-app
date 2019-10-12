@@ -12,6 +12,13 @@ export default class MovieList extends Component {
     };
   }
 
+  static propTypes = {
+    page: PropTypes.number,
+    onChangePage: PropTypes.func,
+    movies: PropTypes.object,
+    filters: PropTypes.object,
+  };
+
   getMovies = (filters, page) => {
     const { sort_by } = filters;
     const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}`;
@@ -57,10 +64,3 @@ export default class MovieList extends Component {
     );
   }
 }
-
-MovieList.propTypes = {
-  page: PropTypes.number,
-  onChangePage: PropTypes.func,
-  movies: PropTypes.object,
-  filters: PropTypes.object,
-};
