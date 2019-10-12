@@ -9,6 +9,7 @@ class App extends Component {
     this.state = {
       filters: {
         sort_by: 'popularity.desc',
+        primary_release_year: new Date().getFullYear().toString(),
       },
       page: 1,
     };

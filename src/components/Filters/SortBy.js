@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 export default class SortBy extends Component {
   static propTypes = {
-    sort_by: PropTypes.string.isRequired,
+    sort_by: PropTypes.string,
+    primary_release_year: PropTypes.string,
     onChangeFilters: PropTypes.func.isRequired,
     options: PropTypes.array,
   };
@@ -28,6 +29,7 @@ export default class SortBy extends Component {
       },
     ],
   };
+
   render() {
     const { sort_by, onChangeFilters, options } = this.props;
 

@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SortBy from './SortBy';
+import FilterByYear from './FilterByYear';
 
 export default class Filters extends React.Component {
   static propTypes = {
     onChangeFilters: PropTypes.func.isRequired,
     filters: PropTypes.object.isRequired,
-    sort_by: PropTypes.string.isRequired,
+    sort_by: PropTypes.string,
     page: PropTypes.number.isRequired,
     onChangePage: PropTypes.func.isRequired,
+    primary_release_year: PropTypes.string,
   };
 
   render() {
     const {
-      filters: { sort_by },
+      filters: { sort_by, primary_release_year },
       page,
       onChangeFilters,
       onChangePage,
@@ -21,6 +23,10 @@ export default class Filters extends React.Component {
     return (
       <form className="mb-3">
         <SortBy sort_by={sort_by} onChangeFilters={onChangeFilters} />
+        <FilterByYear
+          primary_release_year={primary_release_year}
+          onChangeFilters={onChangeFilters}
+        />
         <div className="btn-group">
           <button
             type="button"
