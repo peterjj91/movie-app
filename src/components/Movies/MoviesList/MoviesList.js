@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import MovieItem from './../MovieItem';
 import { API_URL, API_KEY_3 } from './../../../api/api';
 
@@ -12,7 +13,10 @@ export default class MovieList extends Component {
   }
 
   componentDidMount() {
-    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU`;
+    const {
+      filters: { sort_by },
+    } = this.props;
+    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}`;
     fetch(link)
       .then(response => {
         return response.json();
@@ -39,3 +43,8 @@ export default class MovieList extends Component {
     );
   }
 }
+
+MovieList.propTypes = {
+  movies: PropTypes.object,
+  filters: PropTypes.object,
+};
