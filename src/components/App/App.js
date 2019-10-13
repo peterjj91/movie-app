@@ -12,6 +12,7 @@ class App extends Component {
         primary_release_year: new Date().getFullYear().toString(),
       },
       page: 1,
+      total_pages: 0,
     };
   }
 
@@ -33,8 +34,12 @@ class App extends Component {
     });
   };
 
+  onTotalPage = pages => {
+    this.setState({ total_pages: pages });
+  };
+
   render() {
-    const { filters, page } = this.state;
+    const { filters, page, total_pages } = this.state;
 
     return (
       <div className="container">
@@ -48,6 +53,7 @@ class App extends Component {
                   filters={filters}
                   onChangeFilters={this.onChangeFilters}
                   onChangePage={this.onChangePage}
+                  total_pages={total_pages}
                 />
               </div>
             </div>
@@ -57,6 +63,8 @@ class App extends Component {
               filters={filters}
               page={page}
               onChangePage={this.onChangePage}
+              onTotalPage={this.onTotalPage}
+              allPages={total_pages}
             />
           </div>
         </div>

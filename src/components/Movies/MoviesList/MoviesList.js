@@ -16,6 +16,7 @@ export default class MovieList extends Component {
     page: PropTypes.number,
     onChangePage: PropTypes.func,
     movies: PropTypes.object,
+    onTotalPage: PropTypes.func,
     filters: PropTypes.object,
   };
 
@@ -28,6 +29,7 @@ export default class MovieList extends Component {
         return response.json();
       })
       .then(data => {
+        this.props.onTotalPage(data.total_pages);
         this.setState({
           movies: data.results,
         });

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SortBy from './SortBy';
 import FilterByYear from './FilterByYear';
+import Pagination from './Pagination';
 
 export default class Filters extends React.Component {
   static propTypes = {
@@ -9,6 +10,7 @@ export default class Filters extends React.Component {
     filters: PropTypes.object.isRequired,
     sort_by: PropTypes.string,
     page: PropTypes.number.isRequired,
+    total_pages: PropTypes.number.isRequired,
     onChangePage: PropTypes.func.isRequired,
     primary_release_year: PropTypes.string,
   };
@@ -17,6 +19,7 @@ export default class Filters extends React.Component {
     const {
       filters: { sort_by, primary_release_year },
       page,
+      total_pages,
       onChangeFilters,
       onChangePage,
     } = this.props;
@@ -27,23 +30,11 @@ export default class Filters extends React.Component {
           primary_release_year={primary_release_year}
           onChangeFilters={onChangeFilters}
         />
-        <div className="btn-group">
-          <button
-            type="button"
-            className="btn btn-light"
-            disabled={page === 1}
-            onClick={onChangePage.bind(null, page - 1)}
-          >
-            Назад
-          </button>
-          <button
-            type="button"
-            className="btn btn-light"
-            onClick={onChangePage.bind(null, page + 1)}
-          >
-            Вперед
-          </button>
-        </div>
+        <Pagination
+          onChangePage={onChangePage}
+          page={page}
+          total_pages={total_pages}
+        />
       </form>
     );
   }
