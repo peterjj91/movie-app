@@ -22,7 +22,10 @@ export default class MovieList extends Component {
 
   getMovies = (filters, page) => {
     const { sort_by, primary_release_year, with_genres } = filters;
-    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}&primary_release_year=${primary_release_year}&with_genres=${with_genres.toString()}`;
+    let existsGenres =
+      with_genres.length !== 0 ? `&with_genres=${with_genres.toString()}` : '';
+
+    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}&primary_release_year=${primary_release_year}${existsGenres}`;
 
     fetch(link)
       .then(response => {
