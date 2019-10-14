@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SortBy from './SortBy';
 import FilterByYear from './FilterByYear';
 import Pagination from './Pagination';
+import ResetFilter from './ResetFilter';
 
 export default class Filters extends React.Component {
   static propTypes = {
@@ -13,6 +14,7 @@ export default class Filters extends React.Component {
     total_pages: PropTypes.number.isRequired,
     onChangePage: PropTypes.func.isRequired,
     primary_release_year: PropTypes.string,
+    onResetFilters: PropTypes.func,
   };
 
   render() {
@@ -22,6 +24,7 @@ export default class Filters extends React.Component {
       total_pages,
       onChangeFilters,
       onChangePage,
+      onResetFilters,
     } = this.props;
     return (
       <form className="mb-3">
@@ -35,6 +38,7 @@ export default class Filters extends React.Component {
           page={page}
           total_pages={total_pages}
         />
+        <ResetFilter onResetFilters={onResetFilters} />
       </form>
     );
   }

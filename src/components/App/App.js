@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import Filters from './../Filters';
 import MoviesList from './../Movies/MoviesList';
 
+const initialState = {
+  filters: {
+    sort_by: 'popularity.desc',
+    primary_release_year: new Date().getFullYear().toString(),
+  },
+  page: 1,
+  total_pages: 1,
+};
+
 class App extends Component {
   constructor() {
     super();
 
-    this.state = {
-      filters: {
-        sort_by: 'popularity.desc',
-        primary_release_year: new Date().getFullYear().toString(),
-      },
-      page: 1,
-      total_pages: 0,
-    };
+    this.state = initialState;
   }
 
   onChangeFilters = event => {
@@ -34,7 +36,13 @@ class App extends Component {
     });
   };
 
-  onTotalPage = pages => {
+  onResetFilters = event => {
+    event.preventDefault();
+
+    this.setState(initialState);
+  };
+
+  getTotalPage = pages => {
     this.setState({ total_pages: pages });
   };
 
@@ -54,6 +62,7 @@ class App extends Component {
                   onChangeFilters={this.onChangeFilters}
                   onChangePage={this.onChangePage}
                   total_pages={total_pages}
+                  onResetFilters={this.onResetFilters}
                 />
               </div>
             </div>
@@ -63,8 +72,9 @@ class App extends Component {
               filters={filters}
               page={page}
               onChangePage={this.onChangePage}
-              onTotalPage={this.onTotalPage}
+              getTotalPage={this.getTotalPage}
               allPages={total_pages}
+              onResetFilters={this.onResetFilters}
             />
           </div>
         </div>

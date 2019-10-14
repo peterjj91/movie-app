@@ -16,7 +16,7 @@ export default class MovieList extends Component {
     page: PropTypes.number,
     onChangePage: PropTypes.func,
     movies: PropTypes.object,
-    onTotalPage: PropTypes.func,
+    getTotalPage: PropTypes.func,
     filters: PropTypes.object,
   };
 
@@ -29,7 +29,7 @@ export default class MovieList extends Component {
         return response.json();
       })
       .then(data => {
-        this.props.onTotalPage(data.total_pages);
+        this.props.getTotalPage(data.total_pages);
         this.setState({
           movies: data.results,
         });
@@ -59,6 +59,10 @@ export default class MovieList extends Component {
       this.getMovies(filters, page);
     }
   }
+
+  onResetFilters = () => {
+    this.getMovies(this.props.filters, this.props.page);
+  };
 
   render() {
     const { movies } = this.state;
