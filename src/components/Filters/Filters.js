@@ -4,6 +4,7 @@ import SortBy from './SortBy';
 import FilterByYear from './FilterByYear';
 import Pagination from './Pagination';
 import ResetFilter from './ResetFilter';
+import Genres from './Genres';
 
 export default class Filters extends React.Component {
   static propTypes = {
@@ -15,16 +16,19 @@ export default class Filters extends React.Component {
     onChangePage: PropTypes.func.isRequired,
     primary_release_year: PropTypes.string,
     onResetFilters: PropTypes.func,
+    with_genres: PropTypes.array,
+    onChangeGenre: PropTypes.func,
   };
 
   render() {
     const {
-      filters: { sort_by, primary_release_year },
+      filters: { sort_by, primary_release_year, with_genres },
       page,
       total_pages,
       onChangeFilters,
       onChangePage,
       onResetFilters,
+      onChangeGenre,
     } = this.props;
     return (
       <form className="mb-3">
@@ -38,6 +42,7 @@ export default class Filters extends React.Component {
           page={page}
           total_pages={total_pages}
         />
+        <Genres with_genres={with_genres} onChangeGenre={onChangeGenre} />
         <ResetFilter onResetFilters={onResetFilters} />
       </form>
     );
