@@ -88,7 +88,7 @@ class App extends Component {
     const { filters, page, total_pages, with_genres } = this.state;
 
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="row mt-4">
           <div className="col-4">
             <div className="card" style={{ width: '100%' }}>
