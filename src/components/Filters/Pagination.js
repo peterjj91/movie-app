@@ -25,6 +25,7 @@ export default class Pagination extends Component {
           <button
             type="button"
             className="btn btn-light"
+            disabled={page === total_pages}
             onClick={onChangePage.bind(null, page + 1)}
           >
             Вперед
