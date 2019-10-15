@@ -8,8 +8,12 @@ export default class Pagination extends Component {
     onChangePage: PropTypes.func.isRequired,
   };
 
+  onClick = event => {
+    this.props.onChangePage(event);
+  };
+
   render() {
-    const { onChangePage, page, total_pages } = this.props;
+    const { page, total_pages } = this.props;
 
     return (
       <React.Fragment>
@@ -18,7 +22,7 @@ export default class Pagination extends Component {
             type="button"
             className="btn btn-light"
             disabled={page === 1}
-            onClick={onChangePage.bind(null, page - 1)}
+            onClick={() => this.onClick(page - 1)}
           >
             Назад
           </button>
@@ -26,7 +30,7 @@ export default class Pagination extends Component {
             type="button"
             className="btn btn-light"
             disabled={page === total_pages}
-            onClick={onChangePage.bind(null, page + 1)}
+            onClick={() => this.onClick(page + 1)}
           >
             Вперед
           </button>
