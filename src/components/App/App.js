@@ -31,43 +31,6 @@ class App extends Component {
     }));
   };
 
-  onChangeGenre = event => {
-    const value = event.target.value;
-    const checked = event.target.checked;
-
-    if (checked === true) {
-      return this.setState(({ filters }) => {
-        let oldGenres = [...filters.with_genres];
-        oldGenres.push(value);
-
-        return {
-          filters: {
-            ...filters,
-            with_genres: oldGenres,
-          },
-        };
-      });
-    }
-
-    if (checked === false) {
-      return this.setState(({ filters }) => {
-        const idx = filters.with_genres.indexOf(value);
-
-        const newArray = [
-          ...filters.with_genres.slice(0, idx),
-          ...filters.with_genres.slice(idx + 1),
-        ];
-
-        return {
-          filters: {
-            ...filters,
-            with_genres: newArray,
-          },
-        };
-      });
-    }
-  };
-
   onChangePage = page => {
     this.setState({
       page,
@@ -100,7 +63,6 @@ class App extends Component {
                   total_pages={total_pages}
                   onResetFilters={this.onResetFilters}
                   with_genres={with_genres}
-                  onChangeGenre={this.onChangeGenre}
                 />
               </div>
             </div>

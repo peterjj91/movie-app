@@ -14,7 +14,35 @@ export default class Genres extends Component {
   static propTypes = {
     all_genres: PropTypes.array,
     with_genres: PropTypes.array,
-    onChangeGenre: PropTypes.func,
+    onChangeFilters: PropTypes.func,
+    filters: PropTypes.object,
+  };
+
+  onChangeGenre = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    const checked = event.target.checked;
+    let bubblingObject = {};
+
+    if (checked) {
+      bubblingObject = {
+        target: {
+          name,
+          value: [...this.props.with_genres, value],
+        },
+      };
+    } else {
+      bubblingObject = {
+        target: {
+          name,
+          value: this.props.with_genres.filter(
+            genre => Number(genre) !== Number(value)
+          ),
+        },
+      };
+    }
+
+    this.props.onChangeFilters(bubblingObject);
   };
 
   getGenres = () => {
@@ -37,7 +65,7 @@ export default class Genres extends Component {
 
   render() {
     const { all_genres } = this.state;
-    const { with_genres, onChangeGenre } = this.props;
+    const { with_genres } = this.props;
 
     return (
       <React.Fragment>
@@ -55,7 +83,7 @@ export default class Genres extends Component {
                 name="with_genres"
                 checked={checkGenreForBool}
                 value={genre.id}
-                onChange={onChangeGenre}
+                onChange={this.onChangeGenre}
               />
               <label htmlFor={`genre-${genre.id}`} className="form-check-label">
                 {genre.name}

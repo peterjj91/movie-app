@@ -17,7 +17,6 @@ export default class Filters extends React.Component {
     primary_release_year: PropTypes.string,
     onResetFilters: PropTypes.func,
     with_genres: PropTypes.array,
-    onChangeGenre: PropTypes.func,
   };
 
   render() {
@@ -28,7 +27,6 @@ export default class Filters extends React.Component {
       onChangeFilters,
       onChangePage,
       onResetFilters,
-      onChangeGenre,
     } = this.props;
     return (
       <form className="mb-3">
@@ -42,7 +40,7 @@ export default class Filters extends React.Component {
           page={page}
           total_pages={total_pages}
         />
-        <Genres with_genres={with_genres} onChangeGenre={onChangeGenre} />
+        <Genres with_genres={with_genres} onChangeFilters={onChangeFilters} />
         <ResetFilter onResetFilters={onResetFilters} />
       </form>
     );
