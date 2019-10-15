@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import Filters from './../Filters';
 import MoviesList from './../Movies/MoviesList';
 
-const initialState = {
-  filters: {
-    sort_by: 'popularity.desc',
-    primary_release_year: new Date().getFullYear().toString(),
-    with_genres: [],
-  },
-  page: 1,
-  total_pages: 1,
-};
-
 class App extends Component {
   constructor() {
     super();
 
-    this.state = initialState;
+    this.initialState = {
+      filters: {
+        sort_by: 'popularity.desc',
+        primary_release_year: new Date().getFullYear().toString(),
+        with_genres: [],
+      },
+      page: 1,
+      total_pages: 1,
+    };
+
+    this.state = this.initialState;
   }
 
   onChangeFilters = event => {
@@ -77,7 +77,7 @@ class App extends Component {
   onResetFilters = event => {
     event.preventDefault();
 
-    this.setState(initialState);
+    this.setState(this.initialState);
   };
 
   getTotalPage = pages => {
