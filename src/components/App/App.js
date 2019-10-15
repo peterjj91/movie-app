@@ -78,7 +78,7 @@ class App extends Component {
     this.setState(this.initialState);
   };
 
-  getTotalPage = pages => {
+  onChangeTotalPage = pages => {
     this.setState({ total_pages: pages });
   };
 
@@ -110,7 +110,7 @@ class App extends Component {
               filters={filters}
               page={page}
               onChangePage={this.onChangePage}
-              getTotalPage={this.getTotalPage}
+              onChangeTotalPage={this.onChangeTotalPage}
               allPages={total_pages}
               onResetFilters={this.onResetFilters}
             />
