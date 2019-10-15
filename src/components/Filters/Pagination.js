@@ -16,7 +16,7 @@ export default class Pagination extends Component {
     const { page, total_pages } = this.props;
 
     return (
-      <div className="mb-3">
+      <div className="mb-3 mt-3">
         <div className="btn-group mr-3">
           <button
             type="button"

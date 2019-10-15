@@ -33,12 +33,12 @@ export default class Filters extends React.Component {
           onChangeFilters={onChangeFilters}
         />
         <Genres with_genres={with_genres} onChangeFilters={onChangeFilters} />
+        <ResetFilter onResetFilters={onResetFilters} />
         <Pagination
           onChangePage={onChangePage}
           page={page}
           total_pages={total_pages}
         />
-        <ResetFilter onResetFilters={onResetFilters} />
       </form>
     );
   }
