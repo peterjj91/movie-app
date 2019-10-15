@@ -74,12 +74,12 @@ class App extends Component {
     });
   };
 
-  onResetFilters = event => {
-    this.setState(this.initialState);
-  };
-
   onChangeTotalPage = pages => {
     this.setState({ total_pages: pages });
+  };
+
+  onResetFilters = event => {
+    this.setState(this.initialState);
   };
 
   render() {
