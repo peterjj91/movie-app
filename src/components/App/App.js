@@ -73,7 +73,6 @@ class App extends Component {
               page={page}
               onChangePage={this.onChangePage}
               onChangeTotalPage={this.onChangeTotalPage}
-              allPages={total_pages}
               onResetFilters={this.onResetFilters}
             />
           </div>
