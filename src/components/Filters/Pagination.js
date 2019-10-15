@@ -17,7 +17,7 @@ export default class Pagination extends Component {
 
     return (
       <React.Fragment>
-        <div className="btn-group">
+        <div className="btn-group mr-3">
           <button
             type="button"
             className="btn btn-light"
@@ -36,9 +36,9 @@ export default class Pagination extends Component {
           </button>
         </div>
 
-        <p>
+        <span>
           {page} из {total_pages}
-        </p>
+        </span>
       </React.Fragment>
     );
   }
