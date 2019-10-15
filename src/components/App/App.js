@@ -75,8 +75,6 @@ class App extends Component {
   };
 
   onResetFilters = event => {
-    event.preventDefault();
-
     this.setState(this.initialState);
   };
 
