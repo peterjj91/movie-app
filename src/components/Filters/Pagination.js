@@ -16,7 +16,7 @@ export default class Pagination extends Component {
     const { page, total_pages } = this.props;
 
     return (
-      <React.Fragment>
+      <div className="mb-3">
         <div className="btn-group mr-3">
           <button
             type="button"
@@ -39,7 +39,7 @@ export default class Pagination extends Component {
         <span>
           {page} из {total_pages}
         </span>
-      </React.Fragment>
+      </div>
     );
   }
 }
