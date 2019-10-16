@@ -5,6 +5,7 @@ export default class Pagination extends Component {
   static propTypes = {
     page: PropTypes.number.isRequired,
     total_pages: PropTypes.number.isRequired,
+    with_genres: PropTypes.array,
     onChangeFilters: PropTypes.func.isRequired,
   };
 
@@ -13,7 +14,7 @@ export default class Pagination extends Component {
   };
 
   render() {
-    const { page, total_pages } = this.props;
+    const { page, total_pages, with_genres } = this.props;
 
     return (
       <div className="mb-3 mt-3">
@@ -39,6 +40,10 @@ export default class Pagination extends Component {
         <span>
           {page} из {total_pages}
         </span>
+
+        {with_genres.length && (
+          <p className="mt-2">Теуйщие жанры: {with_genres.map(e => e.name)}</p>
+        )}
       </div>
     );
   }

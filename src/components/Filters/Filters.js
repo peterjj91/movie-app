@@ -38,6 +38,7 @@ export default class Filters extends React.Component {
         <Pagination
           onChangeFilters={onChangeFilters}
           page={page}
+          with_genres={with_genres}
           total_pages={total_pages}
         />
       </form>
