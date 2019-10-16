@@ -71,10 +71,6 @@ export default class Genres extends Component {
       <div className="form-group">
         <label>Жанры:</label>
         {all_genres.map(genre => {
-          const checkGenreForBool = with_genres.some(forCheck => {
-            return genre.id === +forCheck;
-          });
-
           return (
             <div className="form-group form-check" key={genre.id}>
               <input
@@ -82,7 +78,7 @@ export default class Genres extends Component {
                 className="form-check-input"
                 id={`genre-${genre.id}`}
                 name="with_genres"
-                checked={checkGenreForBool}
+                checked={with_genres.includes(String(genre.id))}
                 value={genre.id}
                 onChange={this.onChangeGenre}
               />
