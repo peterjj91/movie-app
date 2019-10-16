@@ -68,7 +68,8 @@ export default class Genres extends Component {
     const { with_genres } = this.props;
 
     return (
-      <React.Fragment>
+      <div className="form-group">
+        <label>Жанры:</label>
         {all_genres.map(genre => {
           const checkGenreForBool = with_genres.some(forCheck => {
             return genre.id === +forCheck;
@@ -91,7 +92,7 @@ export default class Genres extends Component {
             </div>
           );
         })}
-      </React.Fragment>
+      </div>
     );
   }
 }
