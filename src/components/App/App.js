@@ -46,7 +46,7 @@ class App extends Component {
   };
 
   render() {
-    const { filters, page, total_pages, with_genres } = this.state;
+    const { filters, page, total_pages } = this.state;
 
     return (
       <div className="container-fluid">
@@ -62,7 +62,6 @@ class App extends Component {
                   onChangePage={this.onChangePage}
                   total_pages={total_pages}
                   onResetFilters={this.onResetFilters}
-                  with_genres={with_genres}
                 />
               </div>
             </div>
