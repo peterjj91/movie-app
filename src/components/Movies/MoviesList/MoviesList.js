@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import MovieItem from './../MovieItem';
 import { API_URL, API_KEY_3 } from './../../../api/api';
 
@@ -22,10 +23,20 @@ export default class MovieList extends Component {
 
   getMovies = (filters, page) => {
     const { sort_by, primary_release_year, with_genres } = filters;
-    let existsGenres =
-      with_genres.length !== 0 ? `&with_genres=${with_genres.join(',')}` : '';
 
-    const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${sort_by}&page=${page}&primary_release_year=${primary_release_year}${existsGenres}`;
+    let queryForLink = queryString.stringify(
+      {
+        api_key: API_KEY_3,
+        language: 'ru-RU',
+        sort_by: sort_by,
+        page: page,
+        primary_release_year: primary_release_year,
+        with_genres: with_genres,
+      },
+      { arrayFormat: 'comma' }
+    );
+
+    const link = `${API_URL}/discover/movie?${queryForLink}`;
 
     fetch(link)
       .then(response => {

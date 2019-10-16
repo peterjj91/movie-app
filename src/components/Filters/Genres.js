@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { API_URL, API_KEY_3 } from './../../api/api';
 
 export default class Genres extends Component {
@@ -46,7 +47,15 @@ export default class Genres extends Component {
   };
 
   getGenres = () => {
-    const link = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`;
+    let queryForLink = queryString.stringify(
+      {
+        api_key: API_KEY_3,
+        language: 'ru-RU',
+      },
+      { arrayFormat: 'comma' }
+    );
+
+    const link = `${API_URL}/genre/movie/list?${queryForLink}`;
 
     fetch(link)
       .then(response => {
