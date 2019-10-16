@@ -5,11 +5,11 @@ export default class Pagination extends Component {
   static propTypes = {
     page: PropTypes.number.isRequired,
     total_pages: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
+    onChangeFilters: PropTypes.func.isRequired,
   };
 
   onClick = event => {
-    this.props.onChangePage(event);
+    this.props.onChangeFilters({ target: { name: 'page', value: event } });
   };
 
   render() {

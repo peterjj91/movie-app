@@ -10,21 +10,22 @@ export default class Filters extends React.Component {
   static propTypes = {
     onChangeFilters: PropTypes.func.isRequired,
     filters: PropTypes.object.isRequired,
-    page: PropTypes.number.isRequired,
+    // page: PropTypes.number.isRequired,
     total_pages: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
+    // onChangePage: PropTypes.func.isRequired,
     onResetFilters: PropTypes.func,
   };
 
   render() {
     const {
-      filters: { sort_by, primary_release_year, with_genres },
-      page,
+      filters: { sort_by, primary_release_year, with_genres, page },
+      // page,
       total_pages,
       onChangeFilters,
-      onChangePage,
+      // onChangePage,
       onResetFilters,
     } = this.props;
+
     return (
       <form className="mb-3">
         <SortBy sort_by={sort_by} onChangeFilters={onChangeFilters} />
@@ -35,7 +36,7 @@ export default class Filters extends React.Component {
         <Genres with_genres={with_genres} onChangeFilters={onChangeFilters} />
         <ResetFilter onResetFilters={onResetFilters} />
         <Pagination
-          onChangePage={onChangePage}
+          onChangeFilters={onChangeFilters}
           page={page}
           total_pages={total_pages}
         />

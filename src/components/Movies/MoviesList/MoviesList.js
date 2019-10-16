@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import _ from 'lodash';
 import MovieItem from './../MovieItem';
 import { API_URL, API_KEY_3 } from './../../../api/api';
 
@@ -14,8 +15,9 @@ export default class MovieList extends Component {
   }
 
   static propTypes = {
-    page: PropTypes.number,
-    onChangePage: PropTypes.func,
+    // page: PropTypes.number,
+    total_pages: PropTypes.number,
+    onChangeFilters: PropTypes.func,
     movies: PropTypes.object,
     onChangeTotalPage: PropTypes.func,
     filters: PropTypes.object,
@@ -51,24 +53,31 @@ export default class MovieList extends Component {
   };
 
   componentDidMount() {
-    this.getMovies(this.props.filters, this.props.page);
+    this.getMovies(this.props.filters, this.props.filters.page);
   }
 
   componentDidUpdate(prevProps) {
-    const { filters, page } = this.props;
+    const { filters, total_pages } = this.props;
 
-    if (JSON.stringify(filters) !== JSON.stringify(prevProps.filters)) {
-      this.props.onChangePage(1);
-      this.getMovies(filters, 1);
+    if (!_.isEqual(filters, prevProps.filters)) {
+      this.props.onChangeFilters({
+        target: {
+          name: 'page',
+          value: !_.isEqual(filters.with_genres, prevProps.filters.with_genres)
+            ? 1
+            : filters.page,
+        },
+      });
+      this.getMovies(filters, filters.page);
     }
 
-    if (JSON.stringify(page) !== JSON.stringify(prevProps.page)) {
-      this.getMovies(filters, page);
+    if (!_.isEqual(total_pages, prevProps.total_pages)) {
+      this.getMovies(filters, 1);
     }
   }
 
   onResetFilters = () => {
-    this.getMovies(this.props.filters, this.props.page);
+    this.getMovies(this.props.filters, this.props.filters.page);
   };
 
   render() {
