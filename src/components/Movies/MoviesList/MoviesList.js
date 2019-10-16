@@ -51,7 +51,7 @@ export default class MovieList extends Component {
       this.getMovies(filters, 1);
     }
 
-    if (page !== prevProps.page) {
+    if (JSON.stringify(page) !== JSON.stringify(prevProps.page)) {
       this.getMovies(filters, page);
     }
   }
