@@ -46,21 +46,7 @@ export default class MovieList extends Component {
   componentDidUpdate(prevProps) {
     const { filters, page } = this.props;
 
-    if (filters.sort_by !== prevProps.filters.sort_by) {
-      this.props.onChangePage(1);
-      this.getMovies(filters, 1);
-    }
-
-    if (
-      filters.with_genres.toString() !==
-      prevProps.filters.with_genres.toString()
-    ) {
-      this.getMovies(filters, 1);
-    }
-
-    if (
-      filters.primary_release_year !== prevProps.filters.primary_release_year
-    ) {
+    if (JSON.stringify(filters) !== JSON.stringify(prevProps.filters)) {
       this.props.onChangePage(1);
       this.getMovies(filters, 1);
     }
