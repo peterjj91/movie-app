@@ -24,12 +24,15 @@ export default class Genres extends Component {
     const value = event.target.value;
     const checked = event.target.checked;
     let bubblingObject = {};
+    const checkedGenre = this.state.all_genres.filter(
+      e => Number(e.id) === Number(value)
+    );
 
     if (checked) {
       bubblingObject = {
         target: {
           name,
-          value: [...this.props.with_genres, value],
+          value: [...this.props.with_genres, ...checkedGenre],
         },
       };
     } else {
@@ -37,7 +40,7 @@ export default class Genres extends Component {
         target: {
           name,
           value: this.props.with_genres.filter(
-            genre => Number(genre) !== Number(value)
+            genre => Number(genre.id) !== Number(value)
           ),
         },
       };
@@ -87,7 +90,7 @@ export default class Genres extends Component {
                 className="form-check-input"
                 id={`genre-${genre.id}`}
                 name="with_genres"
-                checked={with_genres.includes(String(genre.id))}
+                checked={with_genres.some(e => e.id === genre.id)}
                 value={genre.id}
                 onChange={this.onChangeGenre}
               />

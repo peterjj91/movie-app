@@ -33,7 +33,7 @@ export default class MovieList extends Component {
         sort_by: sort_by,
         page: page,
         primary_release_year: primary_release_year,
-        with_genres: with_genres,
+        with_genres: with_genres.map(e => e.id),
       },
       { arrayFormat: 'comma' }
     );
