@@ -41,7 +41,7 @@ class App extends Component {
     this.setState({ total_pages: pages });
   };
 
-  onResetFilters = event => {
+  onResetFilters = () => {
     this.setState(this.initialState);
   };
 
