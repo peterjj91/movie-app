@@ -13,7 +13,6 @@ export default class Genres extends Component {
   }
 
   static propTypes = {
-    all_genres: PropTypes.array,
     with_genres: PropTypes.array,
     onChangeFilters: PropTypes.func,
     filters: PropTypes.object,
