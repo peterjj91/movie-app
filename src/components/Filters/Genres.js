@@ -26,10 +26,8 @@ export default class Genres extends Component {
     const checkedGenre = this.state.all_genres.filter(e => e.id === value);
 
     const updateGenres = checked
-      ? [...this.props.with_genres, ...checkedGenre]
-      : this.props.with_genres.filter(
-          genre => Number(genre.id) !== Number(value)
-        );
+      ? [...this.props.with_genres, value]
+      : this.props.with_genres.filter(genre => Number(genre) !== Number(value));
 
     this.props.onChangeFilters({ target: { name, value: updateGenres } });
   };
@@ -75,7 +73,7 @@ export default class Genres extends Component {
                 className="form-check-input"
                 id={`genre-${genre.id}`}
                 name="with_genres"
-                checked={with_genres.some(e => e.id === genre.id)}
+                checked={with_genres.includes(genre.id)}
                 value={genre.id}
                 onChange={this.onChangeGenre}
               />

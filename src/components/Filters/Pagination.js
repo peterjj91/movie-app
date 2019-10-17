@@ -41,10 +41,6 @@ export default class Pagination extends Component {
         <span>
           {page} из {total_pages}
         </span>
-
-        {with_genres.length && (
-          <p className="mt-2">Теуйщие жанры: {with_genres.map(e => e.name)}</p>
-        )}
       </div>
     );
   }
