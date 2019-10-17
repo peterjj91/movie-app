@@ -20,12 +20,10 @@ export default class Genres extends Component {
 
   onChangeGenre = event => {
     const name = event.target.name;
-    const value = event.target.value;
+    const value = Number(event.target.value);
     const checked = event.target.checked;
 
-    const checkedGenre = this.state.all_genres.filter(
-      e => Number(e.id) === Number(value)
-    );
+    const checkedGenre = this.state.all_genres.filter(e => e.id === value);
 
     const updateGenres = checked
       ? [...this.props.with_genres, ...checkedGenre]
