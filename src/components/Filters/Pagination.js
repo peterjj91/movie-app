@@ -9,9 +9,10 @@ export default class Pagination extends Component {
     onChangeFilters: PropTypes.func.isRequired,
   };
 
-  onClick = event => {
-    this.props.onChangeFilters({ target: { name: 'page', value: event } });
-  };
+  onClick = page => () =>
+    this.props.onChangeFilters({
+      target: { name: 'page', value: page },
+    });
 
   render() {
     const { page, total_pages, with_genres } = this.props;
@@ -23,7 +24,7 @@ export default class Pagination extends Component {
             type="button"
             className="btn btn-light"
             disabled={page === 1}
-            onClick={() => this.onClick(page - 1)}
+            onClick={this.onClick(page - 1)}
           >
             Назад
           </button>
@@ -31,7 +32,7 @@ export default class Pagination extends Component {
             type="button"
             className="btn btn-light"
             disabled={page === total_pages}
-            onClick={() => this.onClick(page + 1)}
+            onClick={this.onClick(page + 1)}
           >
             Вперед
           </button>
