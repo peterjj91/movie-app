@@ -22,30 +22,18 @@ export default class Genres extends Component {
     const name = event.target.name;
     const value = event.target.value;
     const checked = event.target.checked;
-    let bubblingObject = {};
+
     const checkedGenre = this.state.all_genres.filter(
       e => Number(e.id) === Number(value)
     );
 
-    if (checked) {
-      bubblingObject = {
-        target: {
-          name,
-          value: [...this.props.with_genres, ...checkedGenre],
-        },
-      };
-    } else {
-      bubblingObject = {
-        target: {
-          name,
-          value: this.props.with_genres.filter(
-            genre => Number(genre.id) !== Number(value)
-          ),
-        },
-      };
-    }
+    const updateGenres = checked
+      ? [...this.props.with_genres, ...checkedGenre]
+      : this.props.with_genres.filter(
+          genre => Number(genre.id) !== Number(value)
+        );
 
-    this.props.onChangeFilters(bubblingObject);
+    this.props.onChangeFilters({ target: { name, value: updateGenres } });
   };
 
   getGenres = () => {
