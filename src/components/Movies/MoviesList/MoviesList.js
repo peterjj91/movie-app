@@ -71,7 +71,7 @@ export default class MovieList extends Component {
       this.getMovies(filters, filters.page);
     }
 
-    if (!_.isEqual(total_pages, prevProps.total_pages)) {
+    if (total_pages !== prevProps.total_pages) {
       this.getMovies(filters, 1);
     }
   }
