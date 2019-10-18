@@ -15,7 +15,6 @@ export default class MovieList extends Component {
   }
 
   static propTypes = {
-    // page: PropTypes.number,
     total_pages: PropTypes.number,
     onChangeFilters: PropTypes.func,
     movies: PropTypes.object,

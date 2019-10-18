@@ -15,7 +15,7 @@ export default class Pagination extends Component {
     });
 
   render() {
-    const { page, total_pages, with_genres } = this.props;
+    const { page, total_pages } = this.props;
 
     return (
       <div className="mb-3 mt-3">

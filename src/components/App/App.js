@@ -31,12 +31,6 @@ class App extends Component {
     }));
   };
 
-  // onChangePage = page => {
-  //   this.setState({
-  //     page,
-  //   });
-  // };
-
   onChangeTotalPage = pages => {
     this.setState({ total_pages: pages });
   };
@@ -56,10 +50,8 @@ class App extends Component {
               <div className="card-body">
                 <h3>Фильтры:</h3>
                 <Filters
-                  // page={page}
                   filters={filters}
                   onChangeFilters={this.onChangeFilters}
-                  // onChangePage={this.onChangePage}
                   total_pages={total_pages}
                   onResetFilters={this.onResetFilters}
                 />
@@ -70,11 +62,8 @@ class App extends Component {
             <MoviesList
               filters={filters}
               total_pages={total_pages}
-              // page={page}
-              // onChangePage={this.onChangePage}
               onChangeTotalPage={this.onChangeTotalPage}
               onChangeFilters={this.onChangeFilters}
-              // onResetFilters={this.onResetFilters}
             />
           </div>
         </div>

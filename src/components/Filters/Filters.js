@@ -10,19 +10,15 @@ export default class Filters extends React.Component {
   static propTypes = {
     onChangeFilters: PropTypes.func.isRequired,
     filters: PropTypes.object.isRequired,
-    // page: PropTypes.number.isRequired,
     total_pages: PropTypes.number.isRequired,
-    // onChangePage: PropTypes.func.isRequired,
     onResetFilters: PropTypes.func,
   };
 
   render() {
     const {
       filters: { sort_by, primary_release_year, with_genres, page },
-      // page,
       total_pages,
       onChangeFilters,
-      // onChangePage,
       onResetFilters,
     } = this.props;
 
