@@ -9,6 +9,7 @@ export default class Genres extends Component {
 
     this.state = {
       all_genres: [],
+      showGenres: false,
     };
   }
 
@@ -54,6 +55,10 @@ export default class Genres extends Component {
       });
   };
 
+  onShowGenres = () => {
+    this.setState({ showGenres: !this.state.showGenres });
+  };
+
   componentDidMount() {
     this.getGenres();
   }
@@ -64,25 +69,36 @@ export default class Genres extends Component {
 
     return (
       <div className="form-group">
-        <label>Жанры:</label>
-        {all_genres.map(genre => {
-          return (
-            <div className="form-group form-check" key={genre.id}>
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id={`genre-${genre.id}`}
-                name="with_genres"
-                checked={with_genres.includes(genre.id)}
-                value={genre.id}
-                onChange={this.onChangeGenre}
-              />
-              <label htmlFor={`genre-${genre.id}`} className="form-check-label">
-                {genre.name}
-              </label>
-            </div>
-          );
-        })}
+        <button
+          type="button"
+          className="btn btn-outline-dark btn-block mb-3"
+          onClick={this.onShowGenres}
+        >
+          Показать все жанры
+        </button>
+
+        {this.state.showGenres &&
+          all_genres.map(genre => {
+            return (
+              <div className="form-group form-check" key={genre.id}>
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id={`genre-${genre.id}`}
+                  name="with_genres"
+                  checked={with_genres.includes(genre.id)}
+                  value={genre.id}
+                  onChange={this.onChangeGenre}
+                />
+                <label
+                  htmlFor={`genre-${genre.id}`}
+                  className="form-check-label"
+                >
+                  {genre.name}
+                </label>
+              </div>
+            );
+          })}
       </div>
     );
   }
