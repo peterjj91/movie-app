@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import _ from 'lodash';
 import MovieItem from './../MovieItem';
 import { API_URL, API_KEY_3 } from './../../../api/api';
 
-export default class MovieList extends Component {
+export default class MovieList extends PureComponent {
   constructor() {
     super();
 

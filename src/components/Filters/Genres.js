@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { API_URL, API_KEY_3 } from './../../api/api';
 
-export default class Genres extends Component {
+export default class Genres extends PureComponent {
   constructor() {
     super();
 
