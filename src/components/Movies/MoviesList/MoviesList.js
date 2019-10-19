@@ -56,22 +56,18 @@ export default class MovieList extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { filters, total_pages } = this.props;
+    const { filters } = this.props;
 
     if (!_.isEqual(filters, prevProps.filters)) {
       this.props.onChangeFilters({
         target: {
           name: 'page',
-          value: !_.isEqual(filters.with_genres, prevProps.filters.with_genres)
-            ? 1
-            : filters.page,
+          value: !_.isEqual(filters.page, prevProps.filters.page)
+            ? filters.page
+            : 1,
         },
       });
       this.getMovies(filters, filters.page);
-    }
-
-    if (total_pages !== prevProps.total_pages) {
-      this.getMovies(filters, 1);
     }
   }
 
