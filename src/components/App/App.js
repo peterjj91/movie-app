@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import Cookies from 'universal-cookie';
 import Filters from './../Filters';
 import MoviesList from './../Movies/MoviesList';
 import Header from './../Header';
+import { API_URL, API_KEY_3, fetchApi } from './../../api/api';
+
+const cookies = new Cookies();
 
 class App extends Component {
   constructor() {
@@ -27,6 +31,10 @@ class App extends Component {
   };
 
   updateSessionId = session_id => {
+    cookies.set('session_id', session_id, {
+      path: '/',
+      maxAge: 2592000,
+    });
     this.setState({ session_id });
   };
 
@@ -49,6 +57,17 @@ class App extends Component {
   onResetFilters = () => {
     this.setState(this.initialState);
   };
+
+  componentDidMount() {
+    const session_id = cookies.get('session_id');
+    if (session_id) {
+      fetchApi(
+        `${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
+      ).then(user => {
+        this.updateUser(user);
+      });
+    }
+  }
 
   render() {
     const { filters, total_pages, user } = this.state;
