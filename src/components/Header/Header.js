@@ -13,6 +13,8 @@ export default class Header extends Component {
               </a>
             </li>
           </ul>
+
+          <Login />
         </div>
       </nav>
     );
