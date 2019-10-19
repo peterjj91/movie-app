@@ -9,6 +9,7 @@ class App extends Component {
 
     this.initialState = {
       user: null,
+      session_id: null,
       filters: {
         sort_by: 'popularity.desc',
         primary_release_year: new Date().getFullYear().toString(),
@@ -23,6 +24,10 @@ class App extends Component {
 
   updateUser = user => {
     this.setState({ user });
+  };
+
+  updateSessionId = session_id => {
+    this.setState({ session_id });
   };
 
   onChangeFilters = event => {
@@ -46,11 +51,15 @@ class App extends Component {
   };
 
   render() {
-    const { filters, total_pages } = this.state;
+    const { filters, total_pages, user } = this.state;
 
     return (
       <React.Fragment>
-        <Header updateUser={this.updateUser} />
+        <Header
+          user={user}
+          updateSessionId={this.updateSessionId}
+          updateUser={this.updateUser}
+        />
 
         <div className="container-fluid">
           <div className="row mt-4">

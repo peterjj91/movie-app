@@ -14,6 +14,7 @@ export default class Login extends Component {
 
   static propTypes = {
     updateUser: PropTypes.func,
+    updateSessionId: PropTypes.func,
   };
 
   toggleModal = () =>
@@ -34,7 +35,10 @@ export default class Login extends Component {
 
         <Modal isOpen={this.state.showModal} toggle={this.toggleModal}>
           <ModalBody>
-            <LoginForm updateUser={this.props.updateUser} />
+            <LoginForm
+              updateUser={this.props.updateUser}
+              updateSessionId={this.props.updateSessionId}
+            />
           </ModalBody>
         </Modal>
       </React.Fragment>
