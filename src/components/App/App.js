@@ -8,6 +8,7 @@ class App extends Component {
     super();
 
     this.initialState = {
+      user: null,
       filters: {
         sort_by: 'popularity.desc',
         primary_release_year: new Date().getFullYear().toString(),
@@ -19,6 +20,10 @@ class App extends Component {
 
     this.state = this.initialState;
   }
+
+  updateUser = user => {
+    this.setState({ user });
+  };
 
   onChangeFilters = event => {
     const value = event.target.value;
@@ -45,7 +50,7 @@ class App extends Component {
 
     return (
       <React.Fragment>
-        <Header />
+        <Header updateUser={this.updateUser} />
 
         <div className="container-fluid">
           <div className="row mt-4">

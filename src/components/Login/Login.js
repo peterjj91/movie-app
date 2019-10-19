@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Modal, ModalBody } from 'reactstrap';
 import LoginForm from './LoginForm';
 
@@ -10,6 +11,10 @@ export default class Login extends Component {
       showModal: false,
     };
   }
+
+  static propTypes = {
+    updateUser: PropTypes.func,
+  };
 
   toggleModal = () =>
     this.setState(prevState => ({
@@ -29,7 +34,7 @@ export default class Login extends Component {
 
         <Modal isOpen={this.state.showModal} toggle={this.toggleModal}>
           <ModalBody>
-            <LoginForm />
+            <LoginForm updateUser={this.props.updateUser} />
           </ModalBody>
         </Modal>
       </React.Fragment>

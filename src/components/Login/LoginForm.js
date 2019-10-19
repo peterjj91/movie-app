@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { API_URL, API_KEY_3 } from './../../api/api';
 
 export default class LoginForm extends React.Component {
@@ -9,6 +10,10 @@ export default class LoginForm extends React.Component {
     submitting: false,
   };
 
+  static propTypes = {
+    updateUser: PropTypes.func,
+  };
+
   onChange = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -16,13 +21,13 @@ export default class LoginForm extends React.Component {
       [name]: value,
       errors: {
         ...prevState.errors,
+        base: null,
         [name]: null,
       },
     }));
   };
 
   handleBlur = () => {
-    console.log('on blur');
     const errors = this.validateFields();
     if (Object.keys(errors).length > 0) {
       this.setState(prevState => ({
@@ -102,13 +107,17 @@ export default class LoginForm extends React.Component {
         );
       })
       .then(data => {
-        console.log('session', data);
+        return fetchApi(
+          `${API_URL}/account?api_key=${API_KEY_3}&session_id=${data.session_id}`
+        );
+      })
+      .then(user => {
+        this.props.updateUser(user);
         this.setState({
           submitting: false,
         });
       })
       .catch(error => {
-        console.log('error', error);
         this.setState({
           submitting: false,
           errors: {

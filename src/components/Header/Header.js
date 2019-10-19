@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Login from './../Login';
 
 export default class Header extends Component {
+  static propTypes = {
+    updateUser: PropTypes.func,
+  };
+
   render() {
     return (
       <nav className="navbar navbar-dark bg-primary">
@@ -14,7 +19,7 @@ export default class Header extends Component {
             </li>
           </ul>
 
-          <Login />
+          <Login updateUser={this.props.updateUser} />
         </div>
       </nav>
     );
