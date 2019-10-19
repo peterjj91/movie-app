@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Filters from './../Filters';
 import MoviesList from './../Movies/MoviesList';
+import Header from './../Header';
 
 class App extends Component {
   constructor() {
@@ -43,31 +44,35 @@ class App extends Component {
     const { filters, total_pages } = this.state;
 
     return (
-      <div className="container-fluid">
-        <div className="row mt-4">
-          <div className="col-4">
-            <div className="card">
-              <div className="card-body">
-                <h3>Фильтры:</h3>
-                <Filters
-                  filters={filters}
-                  onChangeFilters={this.onChangeFilters}
-                  total_pages={total_pages}
-                  onResetFilters={this.onResetFilters}
-                />
+      <React.Fragment>
+        <Header />
+
+        <div className="container-fluid">
+          <div className="row mt-4">
+            <div className="col-4">
+              <div className="card">
+                <div className="card-body">
+                  <h3>Фильтры:</h3>
+                  <Filters
+                    filters={filters}
+                    onChangeFilters={this.onChangeFilters}
+                    total_pages={total_pages}
+                    onResetFilters={this.onResetFilters}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-8">
-            <MoviesList
-              filters={filters}
-              total_pages={total_pages}
-              onChangeTotalPage={this.onChangeTotalPage}
-              onChangeFilters={this.onChangeFilters}
-            />
+            <div className="col-8">
+              <MoviesList
+                filters={filters}
+                total_pages={total_pages}
+                onChangeTotalPage={this.onChangeTotalPage}
+                onChangeFilters={this.onChangeFilters}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
