@@ -9,10 +9,11 @@ export default class Pagination extends Component {
     onChangeFilters: PropTypes.func.isRequired,
   };
 
-  onClick = page => () =>
+  onClick = page => () => {
     this.props.onChangeFilters({
       target: { name: 'page', value: page },
     });
+  };
 
   render() {
     const { page, total_pages } = this.props;
