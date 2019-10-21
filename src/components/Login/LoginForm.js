@@ -9,23 +9,23 @@ export default class LoginForm extends React.Component {
       username: '',
       password: '',
       repeatPassword: '',
-      submitting: false,
     },
     errors: {
       username: false,
       password: false,
       repeatPassword: false,
     },
+    submitting: false,
   };
 
   static propTypes = {
-    updateUser: PropTypes.func,
-    updateSessionId: PropTypes.func,
+    updateUser: PropTypes.func.isRequired,
+    updateSessionId: PropTypes.func.isRequired,
   };
 
-  onChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
+  onChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
 
     this.setState(prevState => ({
       values: {
@@ -35,20 +35,16 @@ export default class LoginForm extends React.Component {
     }));
   };
 
-  handleBlur = () => {
+  handleBlur = event => {
     const errors = this.validateFields();
+    const { name } = event.target;
 
-    if (Object.keys(errors).length > 0) {
-      this.setState(() => ({
-        errors: errors,
-      }));
-    } else {
-      this.setState(state => ({
-        values: {
-          ...this.state.values,
-          currentStep: state.values.currentStep + 1,
+    if (errors[name]) {
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          [name]: errors[name],
         },
-        errors: errors,
       }));
     }
   };
@@ -71,12 +67,8 @@ export default class LoginForm extends React.Component {
   };
 
   onSubmit = () => {
-    this.setState(prevState => ({
-      values: {
-        ...prevState.values,
-        submitting: true,
-      },
-    }));
+    this.setState({ submitting: true });
+
     fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
       .then(data => {
         return fetchApi(
@@ -118,19 +110,11 @@ export default class LoginForm extends React.Component {
       })
       .then(user => {
         this.props.updateUser(user);
-        this.setState(prevState => ({
-          values: {
-            ...prevState.values,
-            submitting: false,
-          },
-        }));
+        this.setState({ submitting: false });
       })
       .catch(error => {
         this.setState(prevState => ({
-          values: {
-            ...prevState.values,
-            submitting: false,
-          },
+          submitting: false,
           errors: {
             ...prevState.errors,
             base: error.status_message,
@@ -139,8 +123,8 @@ export default class LoginForm extends React.Component {
       });
   };
 
-  onLogin = e => {
-    e.preventDefault();
+  onLogin = event => {
+    event.preventDefault();
     const errors = this.validateFields();
     if (Object.keys(errors).length > 0) {
       this.setState(prevState => ({
@@ -155,7 +139,7 @@ export default class LoginForm extends React.Component {
   };
 
   render() {
-    const { values, errors } = this.state;
+    const { values, errors, submitting } = this.state;
     return (
       <div className="form-login-container">
         <form className="form-login">
@@ -203,7 +187,7 @@ export default class LoginForm extends React.Component {
             type="submit"
             className="btn btn-lg btn-primary btn-block"
             onClick={this.onLogin}
-            disabled={values.submitting}
+            disabled={submitting}
           >
             Вход
           </button>
