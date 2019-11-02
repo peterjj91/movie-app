@@ -7,6 +7,8 @@ import { API_URL, API_KEY_3, fetchApi } from './../../api/api';
 
 const cookies = new Cookies();
 
+export const AppContext = React.createContext();
+
 class App extends Component {
   constructor() {
     super();
@@ -73,12 +75,13 @@ class App extends Component {
     const { filters, total_pages, user } = this.state;
 
     return (
-      <React.Fragment>
-        <Header
-          user={user}
-          updateSessionId={this.updateSessionId}
-          updateUser={this.updateUser}
-        />
+      <AppContext.Provider
+        value={{
+          user: user,
+          updateUser: this.updateUser,
+        }}
+      >
+        <Header user={user} updateSessionId={this.updateSessionId} />
 
         <div className="container-fluid">
           <div className="row mt-4">
@@ -105,7 +108,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </AppContext.Provider>
     );
   }
 }

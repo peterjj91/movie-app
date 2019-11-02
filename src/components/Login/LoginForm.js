@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Field from './../Field';
 import { API_URL, API_KEY_3, fetchApi } from './../../api/api';
+import { AppContext } from './../App/App';
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   state = {
     values: {
       username: '',
@@ -19,7 +20,6 @@ export default class LoginForm extends React.Component {
   };
 
   static propTypes = {
-    updateUser: PropTypes.func.isRequired,
     updateSessionId: PropTypes.func.isRequired,
   };
 
@@ -199,3 +199,15 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+const LoginFormContainer = props => {
+  return (
+    <AppContext.Consumer>
+      {context => <LoginForm {...props} updateUser={context.updateUser} />}
+    </AppContext.Consumer>
+  );
+};
+
+LoginFormContainer.displayName = 'LoginFormContainer';
+
+export default LoginFormContainer;

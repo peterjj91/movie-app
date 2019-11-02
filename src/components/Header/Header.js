@@ -5,13 +5,12 @@ import User from './User';
 
 export default class Header extends Component {
   static propTypes = {
-    updateUser: PropTypes.func,
     updateSessionId: PropTypes.func,
     user: PropTypes.object,
   };
 
   render() {
-    const { user, updateUser, updateSessionId } = this.props;
+    const { user, updateSessionId } = this.props;
 
     return (
       <nav className="navbar navbar-dark bg-primary">
@@ -23,11 +22,7 @@ export default class Header extends Component {
               </a>
             </li>
           </ul>
-          {user ? (
-            <User user={user} />
-          ) : (
-            <Login updateUser={updateUser} updateSessionId={updateSessionId} />
-          )}
+          {user ? <User /> : <Login updateSessionId={updateSessionId} />}
         </div>
       </nav>
     );

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { AppContext } from './../App/App';
 
-export default class User extends React.Component {
+class User extends React.Component {
   static propTypes = {
     user: PropTypes.object,
   };
@@ -20,3 +21,15 @@ export default class User extends React.Component {
     );
   }
 }
+
+const UserContainer = props => {
+  return (
+    <AppContext.Consumer>
+      {context => <User {...props} user={context.user} />}
+    </AppContext.Consumer>
+  );
+};
+
+UserContainer.displayName = 'UserContainer';
+
+export default UserContainer;
