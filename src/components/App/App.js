@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import Filters from './../Filters';
-import MoviesList from './../Movies/MoviesList';
+import MoviesContainer from './../Movies/MoviesContainer';
 import Header from './../Header';
 import { API_URL, API_KEY_3, fetchApi } from './../../api/api';
 
@@ -96,7 +96,7 @@ class App extends Component {
               </div>
             </div>
             <div className="col-8">
-              <MoviesList
+              <MoviesContainer
                 filters={filters}
                 total_pages={total_pages}
                 onChangeTotalPage={this.onChangeTotalPage}

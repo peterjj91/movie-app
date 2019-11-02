@@ -1,93 +1,25 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
-import _ from 'lodash';
 import MovieItem from './../MovieItem';
-import { API_URL, API_KEY_3 } from './../../../api/api';
 
-export default class MovieList extends PureComponent {
-  constructor() {
-    super();
+const MoviesList = ({ movies }) => (
+  <div className="row">
+    {movies.map(movie => {
+      return (
+        <div key={movie.id} className="col-12 col-md-6 mb-4">
+          <MovieItem item={movie} />
+        </div>
+      );
+    })}
+  </div>
+);
 
-    this.state = {
-      movies: [],
-    };
-  }
+MoviesList.defaultProps = {
+  movies: [],
+};
 
-  static propTypes = {
-    total_pages: PropTypes.number,
-    onChangeFilters: PropTypes.func,
-    movies: PropTypes.object,
-    onChangeTotalPage: PropTypes.func,
-    filters: PropTypes.object,
-  };
+MoviesList.propTypes = {
+  movies: PropTypes.array.isRequired,
+};
 
-  getMovies = (filters, page) => {
-    const { sort_by, primary_release_year, with_genres } = filters;
-
-    let queryForLink = queryString.stringify(
-      {
-        api_key: API_KEY_3,
-        language: 'ru-RU',
-        sort_by: sort_by,
-        page: page,
-        primary_release_year: primary_release_year,
-        with_genres: with_genres,
-      },
-      { arrayFormat: 'comma' }
-    );
-
-    const link = `${API_URL}/discover/movie?${queryForLink}`;
-
-    fetch(link)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.props.onChangeTotalPage(data.total_pages);
-        this.setState({
-          movies: data.results,
-        });
-      });
-  };
-
-  componentDidMount() {
-    this.getMovies(this.props.filters, this.props.filters.page);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { filters } = this.props;
-
-    if (!_.isEqual(filters, prevProps.filters)) {
-      this.props.onChangeFilters({
-        target: {
-          name: 'page',
-          value: !_.isEqual(filters.page, prevProps.filters.page)
-            ? filters.page
-            : 1,
-        },
-      });
-      this.getMovies(filters, filters.page);
-    }
-  }
-
-  onResetFilters = () => {
-    this.getMovies(this.props.filters, this.props.filters.page);
-  };
-
-  render() {
-    const { movies } = this.state;
-
-    return (
-      <div className="row">
-        {movies.map(movie => {
-          return (
-            <div key={movie.id} className="col-12 col-md-6 mb-4">
-              <MovieItem item={movie} />
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-}
+export default MoviesList;
