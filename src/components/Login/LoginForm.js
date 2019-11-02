@@ -21,6 +21,7 @@ class LoginForm extends React.Component {
 
   static propTypes = {
     updateSessionId: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
   };
 
   onChange = event => {
@@ -203,7 +204,13 @@ class LoginForm extends React.Component {
 const LoginFormContainer = props => {
   return (
     <AppContext.Consumer>
-      {context => <LoginForm {...props} updateUser={context.updateUser} />}
+      {context => (
+        <LoginForm
+          {...props}
+          updateUser={context.updateUser}
+          updateSessionId={context.updateSessionId}
+        />
+      )}
     </AppContext.Consumer>
   );
 };

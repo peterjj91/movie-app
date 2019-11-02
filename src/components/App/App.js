@@ -79,9 +79,11 @@ class App extends Component {
         value={{
           user: user,
           updateUser: this.updateUser,
+          updateSessionId: this.updateSessionId,
+          session_id: this.state.session_id,
         }}
       >
-        <Header user={user} updateSessionId={this.updateSessionId} />
+        <Header user={user} />
 
         <div className="container-fluid">
           <div className="row mt-4">
