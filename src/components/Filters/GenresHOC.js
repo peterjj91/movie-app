@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
-import { API_URL, API_KEY_3 } from '../../api/api';
+import CallApi from '../../api/api';
 
 export default Component =>
   class GenresHOC extends PureComponent {
@@ -37,25 +36,11 @@ export default Component =>
     };
 
     getGenres = () => {
-      let queryForLink = queryString.stringify(
-        {
-          api_key: API_KEY_3,
-          language: 'ru-RU',
-        },
-        { arrayFormat: 'comma' }
-      );
-
-      const link = `${API_URL}/genre/movie/list?${queryForLink}`;
-
-      fetch(link)
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          this.setState({
-            all_genres: data.genres,
-          });
+      CallApi.get('/genre/movie/list').then(data => {
+        this.setState({
+          all_genres: data.genres,
         });
+      });
     };
 
     onShowGenres = () => {

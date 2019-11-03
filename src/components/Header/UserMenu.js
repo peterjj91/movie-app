@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import AppContextHOC from './../HOC/AppContextHOC';
-import { fetchApi, API_URL, API_KEY_3 } from './../../api/api';
+import CallApi from './../../api/api';
 
 class UserMenu extends React.Component {
   state = {
@@ -27,15 +27,10 @@ class UserMenu extends React.Component {
   };
 
   handleLogOut = () => {
-    fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
-      method: 'DELETE',
-      mode: 'cors',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
+    CallApi.delete('/authentication/session', {
+      body: {
         session_id: this.props.session_id,
-      }),
+      },
     }).then(() => {
       this.props.onLogOut();
     });

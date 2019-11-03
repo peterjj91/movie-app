@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import _ from 'lodash';
-import { API_URL, API_KEY_3 } from '../../../api/api';
+import CallApi from '../../../api/api';
 
 export default Component =>
   class MoviesHOC extends PureComponent {
@@ -25,30 +24,21 @@ export default Component =>
     getMovies = (filters, page) => {
       const { sort_by, primary_release_year, with_genres } = filters;
 
-      let queryForLink = queryString.stringify(
-        {
-          api_key: API_KEY_3,
-          language: 'ru-RU',
-          sort_by: sort_by,
-          page: page,
-          primary_release_year: primary_release_year,
-          with_genres: with_genres,
-        },
-        { arrayFormat: 'comma' }
-      );
+      let queryForLink = {
+        sort_by: sort_by,
+        page: page,
+        primary_release_year: primary_release_year,
+        with_genres: with_genres,
+      };
 
-      const link = `${API_URL}/discover/movie?${queryForLink}`;
-
-      fetch(link)
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          this.props.onChangeTotalPage(data.total_pages);
-          this.setState({
-            movies: data.results,
-          });
+      CallApi.get('/discover/movie', {
+        params: queryForLink,
+      }).then(data => {
+        this.props.onChangeTotalPage(data.total_pages);
+        this.setState({
+          movies: data.results,
         });
+      });
     };
 
     componentDidMount() {
