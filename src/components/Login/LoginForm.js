@@ -96,8 +96,14 @@ class LoginForm extends React.Component {
         });
       })
       .then(user => {
-        this.props.updateUser(user);
-        this.setState({ submitting: false });
+        this.setState(
+          {
+            submitting: false,
+          },
+          () => {
+            this.props.updateUser(user);
+          }
+        );
       })
       .catch(error => {
         this.setState(prevState => ({
