@@ -40,6 +40,14 @@ class App extends Component {
     this.setState({ session_id });
   };
 
+  onLogOut = () => {
+    cookies.remove('session_id');
+    this.setState({
+      session_id: null,
+      user: null,
+    });
+  };
+
   onChangeFilters = event => {
     const value = event.target.value;
     const name = event.target.name;
@@ -67,6 +75,7 @@ class App extends Component {
         `${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`
       ).then(user => {
         this.updateUser(user);
+        this.updateSessionId(session_id);
       });
     }
   }
@@ -81,6 +90,7 @@ class App extends Component {
           updateUser: this.updateUser,
           updateSessionId: this.updateSessionId,
           session_id: this.state.session_id,
+          onLogOut: this.onLogOut,
         }}
       >
         <Header user={user} />

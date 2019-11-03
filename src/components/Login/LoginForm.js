@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Field from './../Field';
 import { API_URL, API_KEY_3, fetchApi } from './../../api/api';
-import { AppContext } from './../App/App';
+import AppContextHOC from './../HOC/AppContextHOC';
 
 class LoginForm extends React.Component {
   state = {
@@ -201,20 +201,4 @@ class LoginForm extends React.Component {
   }
 }
 
-const LoginFormContainer = props => {
-  return (
-    <AppContext.Consumer>
-      {({ updateUser, updateSessionId }) => (
-        <LoginForm
-          {...props}
-          updateUser={updateUser}
-          updateSessionId={updateSessionId}
-        />
-      )}
-    </AppContext.Consumer>
-  );
-};
-
-LoginFormContainer.displayName = 'LoginFormContainer';
-
-export default LoginFormContainer;
+export default AppContextHOC(LoginForm);

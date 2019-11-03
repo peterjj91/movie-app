@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Login from './../Login';
-import User from './User';
+import UserMenu from './UserMenu';
 
 export default class Header extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export default class Header extends Component {
               </a>
             </li>
           </ul>
-          {user ? <User /> : <Login />}
+          {user ? <UserMenu /> : <Login />}
         </div>
       </nav>
     );

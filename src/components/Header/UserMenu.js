@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppContext } from './../App/App';
+import AppContextHOC from './../HOC/AppContextHOC';
 
-class User extends React.Component {
+class UserMenu extends React.Component {
   static propTypes = {
     user: PropTypes.object,
   };
@@ -22,14 +22,4 @@ class User extends React.Component {
   }
 }
 
-const UserContainer = props => {
-  return (
-    <AppContext.Consumer>
-      {({ user }) => <User {...props} user={user} />}
-    </AppContext.Consumer>
-  );
-};
-
-UserContainer.displayName = 'UserContainer';
-
-export default UserContainer;
+export default AppContextHOC(UserMenu);
