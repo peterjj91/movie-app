@@ -4,7 +4,7 @@ import SortBy from './SortBy';
 import FilterByYear from './FilterByYear';
 import Pagination from './Pagination';
 import ResetFilter from './ResetFilter';
-import GenresContainer from './GenresContainer';
+import Genres from './Genres';
 
 export default class Filters extends React.Component {
   static propTypes = {
@@ -29,10 +29,7 @@ export default class Filters extends React.Component {
           primary_release_year={primary_release_year}
           onChangeFilters={onChangeFilters}
         />
-        <GenresContainer
-          with_genres={with_genres}
-          onChangeFilters={onChangeFilters}
-        />
+        <Genres with_genres={with_genres} onChangeFilters={onChangeFilters} />
         <ResetFilter onResetFilters={onResetFilters} />
         <Pagination
           onChangeFilters={onChangeFilters}
