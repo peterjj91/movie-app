@@ -204,11 +204,11 @@ class LoginForm extends React.Component {
 const LoginFormContainer = props => {
   return (
     <AppContext.Consumer>
-      {context => (
+      {({ updateUser, updateSessionId }) => (
         <LoginForm
           {...props}
-          updateUser={context.updateUser}
-          updateSessionId={context.updateSessionId}
+          updateUser={updateUser}
+          updateSessionId={updateSessionId}
         />
       )}
     </AppContext.Consumer>

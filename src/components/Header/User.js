@@ -25,7 +25,7 @@ class User extends React.Component {
 const UserContainer = props => {
   return (
     <AppContext.Consumer>
-      {context => <User {...props} user={context.user} />}
+      {({ user }) => <User {...props} user={user} />}
     </AppContext.Consumer>
   );
 };
