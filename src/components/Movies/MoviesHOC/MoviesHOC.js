@@ -19,6 +19,9 @@ export default Component =>
       movies: PropTypes.object,
       onChangeTotalPage: PropTypes.func,
       filters: PropTypes.object,
+      user: PropTypes.object,
+      id: PropTypes.number,
+      session_id: PropTypes.string,
     };
 
     getMovies = (filters, page) => {
@@ -65,9 +68,40 @@ export default Component =>
       this.getMovies(this.props.filters, this.props.filters.page);
     };
 
+    onFavorite = id => {
+      const { session_id, user } = this.props;
+
+      CallApi.post(`/account/${user.id}/favorite`, {
+        params: {
+          session_id: session_id,
+        },
+        body: {
+          media_type: 'movie',
+          media_id: id,
+          favorite: true,
+        },
+      })
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.log('onFavorite', error);
+        });
+    };
+
+    onWatchlist = () => {
+      console.log('onWatchlist');
+    };
+
     render() {
       const { movies } = this.state;
 
-      return <Component movies={movies} />;
+      return (
+        <Component
+          movies={movies}
+          onFavorite={this.onFavorite}
+          onWatchlist={this.onWatchlist}
+        />
+      );
     }
   };

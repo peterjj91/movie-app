@@ -83,7 +83,7 @@ class App extends Component {
   }
 
   render() {
-    const { filters, total_pages, user } = this.state;
+    const { filters, total_pages, user, session_id } = this.state;
 
     return (
       <AppContext.Provider
@@ -116,8 +116,10 @@ class App extends Component {
               <MoviesList
                 filters={filters}
                 total_pages={total_pages}
+                user={user}
                 onChangeTotalPage={this.onChangeTotalPage}
                 onChangeFilters={this.onChangeFilters}
+                session_id={session_id}
               />
             </div>
           </div>
