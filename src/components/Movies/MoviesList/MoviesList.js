@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import MovieItem from './../MovieItem';
 import MoviesHOC from './../MoviesHOC';
 
-const MoviesList = ({ movies, onFavorite, onWatchlist }) => (
+const MoviesList = ({ movies, onToggleFavorite, onToggleWatchlist }) => (
   <div className="row">
     {movies.map(movie => {
       return (
         <div key={movie.id} className="col-12 col-md-6 mb-4">
           <MovieItem
             item={movie}
-            onFavorite={onFavorite}
-            onWatchlist={onWatchlist}
+            onToggleFavorite={onToggleFavorite}
+            onToggleWatchlist={onToggleWatchlist}
           />
         </div>
       );
@@ -25,8 +25,8 @@ MoviesList.defaultProps = {
 
 MoviesList.propTypes = {
   movies: PropTypes.array.isRequired,
-  onFavorite: PropTypes.func.isRequired,
-  onWatchlist: PropTypes.func.isRequired,
+  onToggleFavorite: PropTypes.func.isRequired,
+  onToggleWatchlist: PropTypes.func.isRequired,
 };
 
 export default MoviesHOC(MoviesList);

@@ -6,3 +6,15 @@
 .invalid-feedback {
   display: block;
 }
+
+.card {
+  &-footer {
+    &__link {
+      color: black;
+
+      & > * {
+        cursor: pointer;
+      }
+    }
+  }
+}

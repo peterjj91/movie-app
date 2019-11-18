@@ -5,14 +5,14 @@ import Icon from '@material-ui/core/Icon';
 export default class MovieItem extends Component {
   static propTypes = {
     item: PropTypes.object.isRequired,
-    onFavorite: PropTypes.func.isRequired,
-    onWatchlist: PropTypes.func.isRequired,
+    onToggleFavorite: PropTypes.func.isRequired,
+    onToggleWatchlist: PropTypes.func.isRequired,
   };
 
   render() {
-    const { item, onFavorite, onWatchlist } = this.props;
+    const { item, onToggleFavorite, onToggleWatchlist } = this.props;
     return (
-      <div className="card" style={{ width: '100%' }}>
+      <div className="card card" style={{ width: '100%' }}>
         <img
           className="card-img-top card-img--height"
           src={`https://image.tmdb.org/t/p/w500${item.backdrop_path ||
@@ -24,8 +24,18 @@ export default class MovieItem extends Component {
           <div className="card-text">Рейтинг: {item.vote_average}</div>
         </div>
         <div className="card-footer d-flex justify-content-between">
-          <Icon onClick={() => onFavorite(item.id)}>star_border</Icon>
-          <Icon onClick={() => onWatchlist(item.id)}>bookmark_border</Icon>
+          <div
+            className="card-footer__link"
+            onClick={() => onToggleFavorite(item.id)}
+          >
+            <Icon>star_border</Icon>
+          </div>
+          <div
+            className="card-footer__link"
+            onClick={() => onToggleWatchlist(item.id)}
+          >
+            <Icon>bookmark_border</Icon>
+          </div>
         </div>
       </div>
     );
