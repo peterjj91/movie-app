@@ -17,6 +17,8 @@ export default Component =>
       total_pages: PropTypes.number,
       onChangeFilters: PropTypes.func,
       movies: PropTypes.object,
+      favoriteMovies: PropTypes.array,
+      getFavoriteMovies: PropTypes.func,
       onChangeTotalPage: PropTypes.func,
       filters: PropTypes.object,
       user: PropTypes.object,
@@ -42,6 +44,85 @@ export default Component =>
           movies: data.results,
         });
       });
+      // .then(() => {
+      //   return CallApi.get(`/account/${this.props.user.id}/favorite/movies`, {
+      //     params: {
+      //       session_id: this.props.session_id,
+      //       page: 1,
+      //     },
+      //   });
+      // })
+      // .then(data => {
+      //   this.setState({
+      //     favoriteMovies: data.results,
+      //   });
+      // });
+    };
+
+    onToggleFavorite = id => {
+      const { session_id, user, getFavoriteMovies } = this.props;
+
+      const queryBody = {
+        params: {
+          session_id: session_id,
+        },
+        body: {
+          media_type: 'movie',
+          media_id: id,
+          favorite: !this.state.isFavorite,
+        },
+      };
+
+      CallApi.post(`/account/${user.id}/favorite`, queryBody)
+        // .then(() => {
+        //   return CallApi.get(`/account/${this.props.user.id}/favorite/movies`, {
+        //     params: {
+        //       session_id: this.props.session_id,
+        //       page: 1,
+        //     },
+        //   });
+        // })
+        .then(data => {
+          // this.setState({
+          //   favoriteMovies: data.results,
+          // });
+          getFavoriteMovies(user, session_id);
+        })
+        .catch(error => {
+          console.log('onToggleFavorite error -', error);
+        });
+    };
+
+    onToggleWatchlist = id => {
+      const { session_id, user } = this.props;
+
+      const queryBody = {
+        params: {
+          session_id: session_id,
+        },
+        body: {
+          media_type: 'movie',
+          media_id: id,
+          watchlist: !this.state.isWatchlist,
+        },
+      };
+
+      CallApi.post(`/account/${user.id}/watchlist`, queryBody)
+        .then(() => {
+          return CallApi.get(`/account/${user.id}/favorite/movies`, {
+            params: {
+              session_id: session_id,
+            },
+          });
+        })
+        .then(data => {
+          this.setState(prevState => ({
+            isWatchlist: !prevState.isWatchlist,
+          }));
+        })
+        .catch(error => {
+          console.log('onToggleFavorite error -', error);
+        });
     };
 
     componentDidMount() {
@@ -72,6 +153,14 @@ export default Component =>
       const { movies } = this.state;
       const { user, session_id } = this.props;
 
-      return <Component movies={movies} user={user} session_id={session_id} />;
+      return (
+        <Component
+          movies={movies}
+          user={user}
+          session_id={session_id}
+          onToggleFavorite={this.onToggleFavorite}
+          onToggleWatchlist={this.onToggleWatchlist}
+        />
+      );
     }
   };

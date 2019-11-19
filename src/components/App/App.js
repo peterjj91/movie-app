@@ -68,6 +68,18 @@ class App extends Component {
     this.setState(this.initialState);
   };
 
+  getFavoriteMovies = (user, session_id) => {
+    CallApi.get(`/account/${user.id}/favorite/movies`, {
+      params: {
+        session_id: session_id,
+        page: 1,
+      },
+    }).then(data => {
+      console.log('getFavoriteMovies', data);
+      this.setState({ favoriteMovies: data.results });
+    });
+  };
+
   componentDidMount() {
     const session_id = cookies.get('session_id');
     if (session_id) {
@@ -78,12 +90,19 @@ class App extends Component {
       }).then(user => {
         this.updateUser(user);
         this.updateSessionId(session_id);
+        this.getFavoriteMovies(user, session_id);
       });
     }
   }
 
   render() {
-    const { filters, total_pages, user, session_id } = this.state;
+    const {
+      filters,
+      total_pages,
+      user,
+      session_id,
+      favoriteMovies,
+    } = this.state;
 
     return (
       <AppContext.Provider
@@ -93,6 +112,8 @@ class App extends Component {
           updateSessionId: this.updateSessionId,
           session_id: this.state.session_id,
           onLogOut: this.onLogOut,
+          getFavoriteMovies: this.getFavoriteMovies,
+          favoriteMovies: favoriteMovies,
         }}
       >
         <Header user={user} />
@@ -120,6 +141,8 @@ class App extends Component {
                 onChangeTotalPage={this.onChangeTotalPage}
                 onChangeFilters={this.onChangeFilters}
                 session_id={session_id}
+                favoriteMovies={favoriteMovies}
+                getFavoriteMovies={this.getFavoriteMovies}
               />
             </div>
           </div>

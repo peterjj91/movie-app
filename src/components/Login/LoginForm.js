@@ -22,6 +22,7 @@ class LoginForm extends React.Component {
   static propTypes = {
     updateSessionId: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
+    getFavoriteMovies: PropTypes.func,
   };
 
   onChange = event => {
@@ -102,6 +103,7 @@ class LoginForm extends React.Component {
           },
           () => {
             this.props.updateUser(user);
+            this.getFavoriteMovies(user, this.props.session_id);
           }
         );
       })
