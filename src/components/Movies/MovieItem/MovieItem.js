@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import Icon from '@material-ui/core/Icon';
 import CallApi from '../../../api/api';
 
 export default class MovieItem extends Component {
   state = {
     isFavorite: false,
+    isWatchlist: false,
   };
 
   static propTypes = {
@@ -17,7 +19,7 @@ export default class MovieItem extends Component {
   onToggleFavorite = id => {
     const { session_id, user } = this.props;
 
-    CallApi.post(`/account/${user.id}/favorite`, {
+    const queryBody = {
       params: {
         session_id: session_id,
       },
@@ -26,16 +28,17 @@ export default class MovieItem extends Component {
         media_id: id,
         favorite: !this.state.isFavorite,
       },
-    })
-      .then(data => {
-        console.log(data, 11);
+    };
+
+    CallApi.post(`/account/${user.id}/favorite`, queryBody)
+      .then(() => {
         return CallApi.get(`/account/${user.id}/favorite/movies`, {
           params: {
             session_id: session_id,
           },
         });
       })
-      .then(() => {
+      .then(data => {
         this.setState(prevState => ({
           isFavorite: !prevState.isFavorite,
         }));
@@ -45,13 +48,41 @@ export default class MovieItem extends Component {
       });
   };
 
-  onToggleWatchlist = () => {
-    console.log('onWatchlist');
+  onToggleWatchlist = id => {
+    const { session_id, user } = this.props;
+
+    const queryBody = {
+      params: {
+        session_id: session_id,
+      },
+      body: {
+        media_type: 'movie',
+        media_id: id,
+        watchlist: !this.state.isWatchlist,
+      },
+    };
+
+    CallApi.post(`/account/${user.id}/watchlist`, queryBody)
+      .then(() => {
+        return CallApi.get(`/account/${user.id}/favorite/movies`, {
+          params: {
+            session_id: session_id,
+          },
+        });
+      })
+      .then(data => {
+        this.setState(prevState => ({
+          isWatchlist: !prevState.isWatchlist,
+        }));
+      })
+      .catch(error => {
+        console.log('onToggleFavorite error -', error);
+      });
   };
 
   render() {
     const { item } = this.props;
-    const { isFavorite } = this.state;
+    const { isFavorite, isWatchlist } = this.state;
 
     return (
       <div className="card card" style={{ width: '100%' }}>
@@ -76,7 +107,7 @@ export default class MovieItem extends Component {
             className="card-footer__link"
             onClick={() => this.onToggleWatchlist(item.id)}
           >
-            <Icon>bookmark_border</Icon>
+            <Icon>{isWatchlist ? 'bookmark' : 'bookmark_border'}</Icon>
           </div>
         </div>
       </div>
