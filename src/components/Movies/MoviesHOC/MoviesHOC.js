@@ -10,7 +10,6 @@ export default Component =>
 
       this.state = {
         movies: [],
-        favoriteMovies: [],
       };
     }
 
@@ -69,51 +68,10 @@ export default Component =>
       this.getMovies(this.props.filters, this.props.filters.page);
     };
 
-    onToggleFavorite = id => {
-      const { session_id, user } = this.props;
-
-      CallApi.post(`/account/${user.id}/favorite`, {
-        params: {
-          session_id: session_id,
-        },
-        body: {
-          media_type: 'movie',
-          media_id: id,
-          favorite: true,
-        },
-      })
-        .then(data => {
-          console.log('data 1 get', data);
-          return CallApi.get(`/account/${user.id}/favorite/movies`, {
-            params: {
-              session_id: session_id,
-            },
-          });
-        })
-        .then(data => {
-          console.log('data 2', data);
-          this.setState({
-            favoriteMovies: data.results,
-          });
-        })
-        .catch(error => {
-          console.log('onFavorite', error);
-        });
-    };
-
-    onToggleWatchlist = () => {
-      console.log('onWatchlist');
-    };
-
     render() {
       const { movies } = this.state;
+      const { user, session_id } = this.props;
 
-      return (
-        <Component
-          movies={movies}
-          onToggleFavorite={this.onToggleFavorite}
-          onToggleWatchlist={this.onToggleWatchlist}
-        />
-      );
+      return <Component movies={movies} user={user} session_id={session_id} />;
     }
   };
