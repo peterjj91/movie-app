@@ -4,40 +4,21 @@ import { Modal, ModalBody } from 'reactstrap';
 import LoginForm from './LoginForm';
 
 export default class Login extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      showModal: false,
-    };
-  }
-
   static propTypes = {
     updateUser: PropTypes.func,
+    showModal: PropTypes.bool,
+    toggleModalLogin: PropTypes.func,
   };
 
-  toggleModal = () =>
-    this.setState(prevState => ({
-      showModal: !prevState.showModal,
-    }));
-
   render() {
-    return (
-      <React.Fragment>
-        <button
-          className="btn btn-success"
-          type="button"
-          onClick={this.toggleModal}
-        >
-          Login
-        </button>
+    const { showModal, toggleModalLogin } = this.props;
 
-        <Modal isOpen={this.state.showModal} toggle={this.toggleModal}>
-          <ModalBody>
-            <LoginForm />
-          </ModalBody>
-        </Modal>
-      </React.Fragment>
+    return (
+      <Modal isOpen={showModal} toggle={toggleModalLogin}>
+        <ModalBody>
+          <LoginForm />
+        </ModalBody>
+      </Modal>
     );
   }
 }

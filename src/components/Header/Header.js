@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import AppContextHOC from './../HOC/AppContextHOC';
 import Login from './../Login';
 import UserMenu from './UserMenu';
 
-export default class Header extends Component {
+class Header extends Component {
   static propTypes = {
     user: PropTypes.object,
+    showModal: PropTypes.bool.isRequired,
+    toggleModalLogin: PropTypes.func.isRequired,
   };
 
   render() {
-    const { user } = this.props;
+    const { user, showModal, toggleModalLogin } = this.props;
 
     return (
       <nav className="navbar navbar-dark bg-primary">
@@ -21,9 +24,28 @@ export default class Header extends Component {
               </a>
             </li>
           </ul>
-          {user ? <UserMenu /> : <Login />}
+
+          {user ? (
+            <UserMenu />
+          ) : (
+            <React.Fragment>
+              <button
+                className="btn btn-success"
+                type="button"
+                onClick={toggleModalLogin}
+              >
+                Login
+              </button>
+              <Login
+                showModal={showModal}
+                toggleModalLogin={toggleModalLogin}
+              />
+            </React.Fragment>
+          )}
         </div>
       </nav>
     );
   }
 }
+
+export default AppContextHOC(Header);

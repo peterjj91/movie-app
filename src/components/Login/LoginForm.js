@@ -105,8 +105,8 @@ class LoginForm extends React.Component {
           },
           () => {
             this.props.updateUser(user);
-            this.getFavoriteMovies(user, this.props.session_id);
-            this.getMoviesWatchlist(user, this.props.session_id);
+            this.props.getFavoriteMovies(user, this.props.session_id);
+            this.props.getMoviesWatchlist(user, this.props.session_id);
           }
         );
       })

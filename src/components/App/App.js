@@ -22,6 +22,7 @@ class App extends Component {
         with_genres: [],
         page: 1,
       },
+      showModal: false,
       favoriteMovies: [],
       moviesWatchlist: [],
       total_pages: 1,
@@ -92,6 +93,11 @@ class App extends Component {
     });
   };
 
+  toggleModalLogin = () =>
+    this.setState(prevState => ({
+      showModal: !prevState.showModal,
+    }));
+
   componentDidMount() {
     const session_id = cookies.get('session_id');
     if (session_id) {
@@ -116,6 +122,7 @@ class App extends Component {
       session_id,
       favoriteMovies,
       moviesWatchlist,
+      showModal,
     } = this.state;
 
     return (
@@ -130,6 +137,8 @@ class App extends Component {
           getMoviesWatchlist: this.getMoviesWatchlist,
           favoriteMovies: favoriteMovies,
           moviesWatchlist: moviesWatchlist,
+          toggleModalLogin: this.toggleModalLogin,
+          showModal: showModal,
         }}
       >
         <Header user={user} />
@@ -161,6 +170,8 @@ class App extends Component {
                 getFavoriteMovies={this.getFavoriteMovies}
                 moviesWatchlist={moviesWatchlist}
                 getMoviesWatchlist={this.getMoviesWatchlist}
+                toggleModalLogin={this.toggleModalLogin}
+                showModal={showModal}
               />
             </div>
           </div>

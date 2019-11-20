@@ -26,6 +26,8 @@ export default Component =>
       user: PropTypes.object,
       id: PropTypes.number,
       session_id: PropTypes.string,
+      showModal: PropTypes.bool.isRequired,
+      toggleModalLogin: PropTypes.func.isRequired,
     };
 
     getMovies = (filters, page) => {
@@ -48,13 +50,20 @@ export default Component =>
       });
     };
 
+    checkUser = () => this.props.user && true;
+
     onToggleFavorite = id => {
       const {
         session_id,
         user,
         getFavoriteMovies,
         favoriteMovies,
+        toggleModalLogin,
       } = this.props;
+
+      if (!session_id) {
+        return toggleModalLogin();
+      }
 
       const queryBody = {
         params: {
@@ -82,7 +91,12 @@ export default Component =>
         user,
         getMoviesWatchlist,
         moviesWatchlist,
+        toggleModalLogin,
       } = this.props;
+
+      if (!session_id) {
+        return toggleModalLogin();
+      }
 
       const queryBody = {
         params: {
