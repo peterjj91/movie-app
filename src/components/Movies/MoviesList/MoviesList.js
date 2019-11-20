@@ -37,6 +37,8 @@ MoviesList.propTypes = {
   movies: PropTypes.array,
   user: PropTypes.object,
   session_id: PropTypes.string,
+  onToggleFavorite: PropTypes.func,
+  onToggleWatchlist: PropTypes.func,
 };
 
 export default MoviesHOC(MoviesList);

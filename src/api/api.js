@@ -34,8 +34,8 @@ export default class CallApi {
     let queryForLink = queryString.stringify(
       {
         api_key: API_KEY_3,
-        ...params,
         language: 'ru-RU',
+        ...params,
       },
       { arrayFormat: 'comma' }
     );

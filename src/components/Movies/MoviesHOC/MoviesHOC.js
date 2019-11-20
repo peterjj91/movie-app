@@ -18,7 +18,9 @@ export default Component =>
       onChangeFilters: PropTypes.func,
       movies: PropTypes.object,
       favoriteMovies: PropTypes.array,
+      moviesWatchlist: PropTypes.array,
       getFavoriteMovies: PropTypes.func,
+      getMoviesWatchlist: PropTypes.func,
       onChangeTotalPage: PropTypes.func,
       filters: PropTypes.object,
       user: PropTypes.object,
@@ -44,23 +46,15 @@ export default Component =>
           movies: data.results,
         });
       });
-      // .then(() => {
-      //   return CallApi.get(`/account/${this.props.user.id}/favorite/movies`, {
-      //     params: {
-      //       session_id: this.props.session_id,
-      //       page: 1,
-      //     },
-      //   });
-      // })
-      // .then(data => {
-      //   this.setState({
-      //     favoriteMovies: data.results,
-      //   });
-      // });
     };
 
     onToggleFavorite = id => {
-      const { session_id, user, getFavoriteMovies } = this.props;
+      const {
+        session_id,
+        user,
+        getFavoriteMovies,
+        favoriteMovies,
+      } = this.props;
 
       const queryBody = {
         params: {
@@ -69,23 +63,12 @@ export default Component =>
         body: {
           media_type: 'movie',
           media_id: id,
-          favorite: !this.state.isFavorite,
+          favorite: !favoriteMovies.some(film => film.id === id),
         },
       };
 
       CallApi.post(`/account/${user.id}/favorite`, queryBody)
-        // .then(() => {
-        //   return CallApi.get(`/account/${this.props.user.id}/favorite/movies`, {
-        //     params: {
-        //       session_id: this.props.session_id,
-        //       page: 1,
-        //     },
-        //   });
-        // })
-        .then(data => {
-          // this.setState({
-          //   favoriteMovies: data.results,
-          // });
+        .then(() => {
           getFavoriteMovies(user, session_id);
         })
         .catch(error => {
@@ -94,7 +77,12 @@ export default Component =>
     };
 
     onToggleWatchlist = id => {
-      const { session_id, user } = this.props;
+      const {
+        session_id,
+        user,
+        getMoviesWatchlist,
+        moviesWatchlist,
+      } = this.props;
 
       const queryBody = {
         params: {
@@ -103,25 +91,16 @@ export default Component =>
         body: {
           media_type: 'movie',
           media_id: id,
-          watchlist: !this.state.isWatchlist,
+          watchlist: !moviesWatchlist.some(film => film.id === id),
         },
       };
 
       CallApi.post(`/account/${user.id}/watchlist`, queryBody)
         .then(() => {
-          return CallApi.get(`/account/${user.id}/favorite/movies`, {
-            params: {
-              session_id: session_id,
-            },
-          });
-        })
-        .then(data => {
-          this.setState(prevState => ({
-            isWatchlist: !prevState.isWatchlist,
-          }));
+          getMoviesWatchlist(user, session_id);
         })
         .catch(error => {
-          console.log('onToggleFavorite error -', error);
+          console.log('onToggleWatchlist error -', error);
         });
     };
 

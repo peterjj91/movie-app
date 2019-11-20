@@ -22,6 +22,8 @@ class App extends Component {
         with_genres: [],
         page: 1,
       },
+      favoriteMovies: [],
+      moviesWatchlist: [],
       total_pages: 1,
     };
 
@@ -72,11 +74,21 @@ class App extends Component {
     CallApi.get(`/account/${user.id}/favorite/movies`, {
       params: {
         session_id: session_id,
-        page: 1,
       },
     }).then(data => {
-      console.log('getFavoriteMovies', data);
+      console.log('getFavoriteMovies', data.results.map(i => i.id));
       this.setState({ favoriteMovies: data.results });
+    });
+  };
+
+  getMoviesWatchlist = (user, session_id) => {
+    CallApi.get(`/account/${user.id}/watchlist/movies`, {
+      params: {
+        session_id: session_id,
+      },
+    }).then(data => {
+      console.log('getMoviesWatchlist', data.results.map(i => i.id));
+      this.setState({ moviesWatchlist: data.results });
     });
   };
 
@@ -90,7 +102,8 @@ class App extends Component {
       }).then(user => {
         this.updateUser(user);
         this.updateSessionId(session_id);
-        this.getFavoriteMovies(user, session_id);
+        this.getFavoriteMovies(this.state.user, this.state.session_id);
+        this.getMoviesWatchlist(this.state.user, this.state.session_id);
       });
     }
   }
@@ -102,6 +115,7 @@ class App extends Component {
       user,
       session_id,
       favoriteMovies,
+      moviesWatchlist,
     } = this.state;
 
     return (
@@ -113,7 +127,9 @@ class App extends Component {
           session_id: this.state.session_id,
           onLogOut: this.onLogOut,
           getFavoriteMovies: this.getFavoriteMovies,
+          getMoviesWatchlist: this.getMoviesWatchlist,
           favoriteMovies: favoriteMovies,
+          moviesWatchlist: moviesWatchlist,
         }}
       >
         <Header user={user} />
@@ -143,6 +159,8 @@ class App extends Component {
                 session_id={session_id}
                 favoriteMovies={favoriteMovies}
                 getFavoriteMovies={this.getFavoriteMovies}
+                moviesWatchlist={moviesWatchlist}
+                getMoviesWatchlist={this.getMoviesWatchlist}
               />
             </div>
           </div>
