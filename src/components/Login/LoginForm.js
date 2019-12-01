@@ -25,6 +25,7 @@ class LoginForm extends React.Component {
     getFavoriteMovies: PropTypes.func,
     getMoviesWatchlist: PropTypes.func,
     session_id: PropTypes.string,
+    toggleModalLogin: PropTypes.func,
   };
 
   onChange = event => {
@@ -105,6 +106,7 @@ class LoginForm extends React.Component {
           },
           () => {
             this.props.updateUser(user);
+            this.props.toggleModalLogin();
             this.props.getFavoriteMovies(user, this.props.session_id);
             this.props.getMoviesWatchlist(user, this.props.session_id);
           }

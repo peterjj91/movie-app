@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
+
 import Filters from './../Filters';
 import MoviesList from './../Movies/MoviesList';
 import Header from './../Header';
 import CallApi from './../../api/api';
+import Login from '../Login';
 
 const cookies = new Cookies();
 
@@ -77,7 +79,6 @@ class App extends Component {
         session_id: session_id,
       },
     }).then(data => {
-      console.log('getFavoriteMovies', data.results.map(i => i.id));
       this.setState({ favoriteMovies: data.results });
     });
   };
@@ -88,7 +89,6 @@ class App extends Component {
         session_id: session_id,
       },
     }).then(data => {
-      console.log('getMoviesWatchlist', data.results.map(i => i.id));
       this.setState({ moviesWatchlist: data.results });
     });
   };
@@ -176,6 +176,8 @@ class App extends Component {
             </div>
           </div>
         </div>
+
+        <Login />
       </AppContext.Provider>
     );
   }

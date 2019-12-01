@@ -26,7 +26,6 @@ export default Component =>
       user: PropTypes.object,
       id: PropTypes.number,
       session_id: PropTypes.string,
-      showModal: PropTypes.bool.isRequired,
       toggleModalLogin: PropTypes.func.isRequired,
     };
 
@@ -48,74 +47,6 @@ export default Component =>
           movies: data.results,
         });
       });
-    };
-
-    checkUser = () => this.props.user && true;
-
-    onToggleFavorite = id => {
-      const {
-        session_id,
-        user,
-        getFavoriteMovies,
-        favoriteMovies,
-        toggleModalLogin,
-      } = this.props;
-
-      if (!session_id) {
-        return toggleModalLogin();
-      }
-
-      const queryBody = {
-        params: {
-          session_id: session_id,
-        },
-        body: {
-          media_type: 'movie',
-          media_id: id,
-          favorite: !favoriteMovies.some(film => film.id === id),
-        },
-      };
-
-      CallApi.post(`/account/${user.id}/favorite`, queryBody)
-        .then(() => {
-          getFavoriteMovies(user, session_id);
-        })
-        .catch(error => {
-          console.log('onToggleFavorite error -', error);
-        });
-    };
-
-    onToggleWatchlist = id => {
-      const {
-        session_id,
-        user,
-        getMoviesWatchlist,
-        moviesWatchlist,
-        toggleModalLogin,
-      } = this.props;
-
-      if (!session_id) {
-        return toggleModalLogin();
-      }
-
-      const queryBody = {
-        params: {
-          session_id: session_id,
-        },
-        body: {
-          media_type: 'movie',
-          media_id: id,
-          watchlist: !moviesWatchlist.some(film => film.id === id),
-        },
-      };
-
-      CallApi.post(`/account/${user.id}/watchlist`, queryBody)
-        .then(() => {
-          getMoviesWatchlist(user, session_id);
-        })
-        .catch(error => {
-          console.log('onToggleWatchlist error -', error);
-        });
     };
 
     componentDidMount() {
@@ -146,14 +77,6 @@ export default Component =>
       const { movies } = this.state;
       const { user, session_id } = this.props;
 
-      return (
-        <Component
-          movies={movies}
-          user={user}
-          session_id={session_id}
-          onToggleFavorite={this.onToggleFavorite}
-          onToggleWatchlist={this.onToggleWatchlist}
-        />
-      );
+      return <Component movies={movies} user={user} session_id={session_id} />;
     }
   };

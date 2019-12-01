@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Icon from '@material-ui/core/Icon';
+
+import ToggleFavorite from '../../ToggleFavorite';
+import ToggleWatchlist from '../../ToggleWatchlist';
 
 export default class MovieItem extends Component {
-  state = {
-    isFavorite: false,
-    isWatchlist: false,
-  };
-
   static propTypes = {
     item: PropTypes.object,
     user: PropTypes.object,
     session_id: PropTypes.string,
-    onToggleFavorite: PropTypes.func,
-    onToggleWatchlist: PropTypes.func,
   };
 
   render() {
-    const { item, onToggleFavorite, onToggleWatchlist } = this.props;
-    const { isFavorite, isWatchlist } = this.state;
+    const { item } = this.props;
 
     return (
       <div className="card card" style={{ width: '100%' }}>
@@ -33,17 +27,11 @@ export default class MovieItem extends Component {
           <div className="card-text">Рейтинг: {item.vote_average}</div>
         </div>
         <div className="card-footer d-flex justify-content-between">
-          <div
-            className="card-footer__link"
-            onClick={() => onToggleFavorite(item.id)}
-          >
-            <Icon>{isFavorite ? 'star' : 'star_border'}</Icon>
+          <div className="card-footer__link">
+            <ToggleFavorite id={item.id} />
           </div>
-          <div
-            className="card-footer__link"
-            onClick={() => onToggleWatchlist(item.id)}
-          >
-            <Icon>{isWatchlist ? 'bookmark' : 'bookmark_border'}</Icon>
+          <div className="card-footer__link">
+            <ToggleWatchlist id={item.id} />
           </div>
         </div>
       </div>
