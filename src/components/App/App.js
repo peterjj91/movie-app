@@ -141,7 +141,7 @@ class App extends Component {
           showModal: showModal,
         }}
       >
-        <Header user={user} />
+        <Header />
 
         <div className="container-fluid">
           <div className="row mt-4">
@@ -162,7 +162,6 @@ class App extends Component {
               <MoviesList
                 filters={filters}
                 total_pages={total_pages}
-                user={user}
                 onChangeTotalPage={this.onChangeTotalPage}
                 onChangeFilters={this.onChangeFilters}
                 session_id={session_id}
