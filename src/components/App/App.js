@@ -16,8 +16,12 @@ class App extends Component {
     super();
 
     this.initialState = {
-      user: null,
-      session_id: null,
+      auth: {
+        user: null,
+        session_id: null,
+      },
+      // user: null,
+      // session_id: null,
       filters: {
         sort_by: 'popularity.desc',
         primary_release_year: new Date().getFullYear().toString(),
@@ -33,6 +37,22 @@ class App extends Component {
     this.state = this.initialState;
   }
 
+  updateAuth = event => {
+    this.setState(prevState => ({
+      auth: {
+        ...prevState.auth,
+        ...event,
+      },
+    }));
+
+    if (Object.keys(event).some(i => i === 'session_id')) {
+      cookies.set('session_id', event.session_id, {
+        path: '/',
+        maxAge: 2592000,
+      });
+    }
+  };
+
   updateUser = user => {
     this.setState({ user });
   };
@@ -47,10 +67,10 @@ class App extends Component {
 
   onLogOut = () => {
     cookies.remove('session_id');
-    this.setState({
-      session_id: null,
-      user: null,
-    });
+    // this.setState({
+    //   session_id: null,
+    //   user: null,
+    // });
   };
 
   onChangeFilters = event => {
@@ -100,16 +120,24 @@ class App extends Component {
 
   componentDidMount() {
     const session_id = cookies.get('session_id');
-    if (session_id) {
+
+    if (session_id && session_id !== 'null') {
       CallApi.get(`/account`, {
         params: {
           session_id: session_id,
         },
       }).then(user => {
-        this.updateUser(user);
-        this.updateSessionId(session_id);
-        this.getFavoriteMovies(this.state.user, this.state.session_id);
-        this.getMoviesWatchlist(this.state.user, this.state.session_id);
+        this.updateAuth({ user: user, session_id: session_id });
+        // this.updateUser(user);
+        // this.updateSessionId(session_id);
+        this.getFavoriteMovies(
+          this.state.auth.user,
+          this.state.auth.session_id
+        );
+        this.getMoviesWatchlist(
+          this.state.auth.user,
+          this.state.auth.session_id
+        );
       });
     }
   }
@@ -118,19 +146,22 @@ class App extends Component {
     const {
       filters,
       total_pages,
-      user,
-      session_id,
+      // user,
+      // session_id,
       favoriteMovies,
       moviesWatchlist,
       showModal,
+      auth,
     } = this.state;
 
     return (
       <AppContext.Provider
         value={{
-          user: user,
-          updateUser: this.updateUser,
-          updateSessionId: this.updateSessionId,
+          auth: auth,
+          updateAuth: this.updateAuth,
+          // user: user,
+          // updateUser: this.updateUser,
+          // updateSessionId: this.updateSessionId,
           session_id: this.state.session_id,
           onLogOut: this.onLogOut,
           getFavoriteMovies: this.getFavoriteMovies,
@@ -164,7 +195,7 @@ class App extends Component {
                 total_pages={total_pages}
                 onChangeTotalPage={this.onChangeTotalPage}
                 onChangeFilters={this.onChangeFilters}
-                session_id={session_id}
+                session_id={auth.session_id}
                 favoriteMovies={favoriteMovies}
                 getFavoriteMovies={this.getFavoriteMovies}
                 moviesWatchlist={moviesWatchlist}

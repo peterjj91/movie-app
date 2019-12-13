@@ -7,8 +7,8 @@ import ToggleWatchlist from '../../ToggleWatchlist';
 export default class MovieItem extends Component {
   static propTypes = {
     item: PropTypes.object,
-    user: PropTypes.object,
-    session_id: PropTypes.string,
+    // user: PropTypes.object,
+    // session_id: PropTypes.string,
   };
 
   render() {
