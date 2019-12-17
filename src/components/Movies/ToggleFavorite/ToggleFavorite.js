@@ -2,17 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 
-import CallApi from '../../api/api';
-import AppContextHOC from './../HOC/AppContextHOC';
+import CallApi from '../../../api/api';
+import AppContextHOC from '../../HOC/AppContextHOC';
 
 function ToggleFavorite({
   id,
-  // session_id,
-  // user,
   auth,
-  getFavoriteMovies,
   favoriteMovies,
   toggleModalLogin,
+  onToggleFavoriteMovies,
 }) {
   const isMovieFavorite = favoriteMovies.some(film => film.id === id);
   const [isSelected, setIsSelected] = useState(false);
@@ -43,7 +41,7 @@ function ToggleFavorite({
         setIsSelected(!isSelected);
       })
       .then(() => {
-        getFavoriteMovies(user, session_id);
+        onToggleFavoriteMovies();
       })
       .catch(error => {
         console.log('onToggleFavorite error -', error);
@@ -59,8 +57,6 @@ function ToggleFavorite({
 
 ToggleFavorite.propTypes = {
   id: PropTypes.number.isRequired,
-  // session_id: PropTypes.string,
-  // user: PropTypes.object,
   auth: PropTypes.object,
   getFavoriteMovies: PropTypes.func,
   favoriteMovies: PropTypes.array,

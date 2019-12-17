@@ -20,12 +20,8 @@ class LoginForm extends React.Component {
   };
 
   static propTypes = {
-    // updateSessionId: PropTypes.func.isRequired,
-    // updateUser: PropTypes.func.isRequired,
     updateAuth: PropTypes.func.isRequired,
-    getFavoriteMovies: PropTypes.func,
     getMoviesWatchlist: PropTypes.func,
-    // session_id: PropTypes.string,
     toggleModalLogin: PropTypes.func,
   };
 
@@ -93,7 +89,6 @@ class LoginForm extends React.Component {
         });
       })
       .then(data => {
-        // this.props.updateSessionId(data.session_id);
         this.props.updateAuth({ session_id: data.session_id });
         return CallApi.get('/account', {
           params: {
@@ -102,6 +97,8 @@ class LoginForm extends React.Component {
         });
       })
       .then(user => {
+        const { session_id } = this.props.auth;
+
         this.setState(
           {
             submitting: false,
@@ -109,11 +106,9 @@ class LoginForm extends React.Component {
           () => {
             this.props.updateAuth({
               user,
+              session_id,
             });
-            // this.props.updateUser(user);
             this.props.toggleModalLogin();
-            this.props.getFavoriteMovies(user, this.props.auth.session_id);
-            this.props.getMoviesWatchlist(user, this.props.auth.session_id);
           }
         );
       })

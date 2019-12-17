@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MovieItem from './../MovieItem';
 import MoviesHOC from './../MoviesHOC';
 
-const MoviesList = ({ movies, user, session_id }) => (
+const MoviesList = ({ movies, user, session_id, onToggleFavoriteMovies }) => (
   <div className="row">
     {movies.map(movie => {
       return (

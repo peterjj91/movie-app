@@ -16,8 +16,6 @@ class UserMenu extends React.Component {
 
   static propTypes = {
     auth: PropTypes.object,
-    // user: PropTypes.object,
-    // session_id: PropTypes.string,
     onLogOut: PropTypes.func,
     updateAuth: PropTypes.func,
   };

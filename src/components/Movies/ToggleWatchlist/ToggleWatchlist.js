@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 
-import CallApi from '../../api/api';
-import AppContextHOC from './../HOC/AppContextHOC';
+import CallApi from '../../../api/api';
+import AppContextHOC from '../../HOC/AppContextHOC';
 
 function ToggleWatchlist({
   id,
-  // session_id,
-  // user,
   auth,
-  getMoviesWatchlist,
+  onToggleMoviesWatchlist,
   moviesWatchlist,
   toggleModalLogin,
 }) {
@@ -43,7 +41,7 @@ function ToggleWatchlist({
         setIsSelected(!isSelected);
       })
       .then(() => {
-        getMoviesWatchlist(user, session_id);
+        onToggleMoviesWatchlist();
       })
       .catch(error => {
         console.log('onToggleWatchlist error -', error);
@@ -59,8 +57,6 @@ function ToggleWatchlist({
 
 ToggleWatchlist.propTypes = {
   id: PropTypes.number.isRequired,
-  // session_id: PropTypes.string,
-  // user: PropTypes.object,
   auth: PropTypes.object,
   getMoviesWatchlist: PropTypes.func,
   moviesWatchlist: PropTypes.array,

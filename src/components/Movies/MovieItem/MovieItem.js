@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ToggleFavorite from '../../ToggleFavorite';
-import ToggleWatchlist from '../../ToggleWatchlist';
+import ToggleFavorite from '../ToggleFavorite';
+import ToggleWatchlist from '../ToggleWatchlist';
 
 export default class MovieItem extends Component {
   static propTypes = {
     item: PropTypes.object,
-    // user: PropTypes.object,
-    // session_id: PropTypes.string,
   };
 
   render() {

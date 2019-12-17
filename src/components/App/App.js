@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
-
+import _ from 'lodash';
 import Filters from './../Filters';
 import MoviesList from './../Movies/MoviesList';
 import Header from './../Header';
@@ -20,8 +20,6 @@ class App extends Component {
         user: null,
         session_id: null,
       },
-      // user: null,
-      // session_id: null,
       filters: {
         sort_by: 'popularity.desc',
         primary_release_year: new Date().getFullYear().toString(),
@@ -29,6 +27,8 @@ class App extends Component {
         page: 1,
       },
       showModal: false,
+      loadingFavoriteMovies: false,
+      loadingMoviesWatchlist: false,
       favoriteMovies: [],
       moviesWatchlist: [],
       total_pages: 1,
@@ -37,40 +37,23 @@ class App extends Component {
     this.state = this.initialState;
   }
 
-  updateAuth = event => {
+  updateAuth = ({ user, session_id }) => {
     this.setState(prevState => ({
       auth: {
         ...prevState.auth,
-        ...event,
+        user,
+        session_id,
       },
     }));
 
-    if (Object.keys(event).some(i => i === 'session_id')) {
-      cookies.set('session_id', event.session_id, {
-        path: '/',
-        maxAge: 2592000,
-      });
-    }
-  };
-
-  updateUser = user => {
-    this.setState({ user });
-  };
-
-  updateSessionId = session_id => {
     cookies.set('session_id', session_id, {
       path: '/',
       maxAge: 2592000,
     });
-    this.setState({ session_id });
   };
 
   onLogOut = () => {
     cookies.remove('session_id');
-    // this.setState({
-    //   session_id: null,
-    //   user: null,
-    // });
   };
 
   onChangeFilters = event => {
@@ -87,6 +70,18 @@ class App extends Component {
 
   onChangeTotalPage = pages => {
     this.setState({ total_pages: pages });
+  };
+
+  onToggleFavoriteMovies = () => {
+    this.setState({
+      loadingFavoriteMovies: !this.state.loadingFavoriteMovies,
+    });
+  };
+
+  onToggleMoviesWatchlist = () => {
+    this.setState({
+      loadingMoviesWatchlist: !this.state.loadingMoviesWatchlist,
+    });
   };
 
   onResetFilters = () => {
@@ -118,6 +113,27 @@ class App extends Component {
       showModal: !prevState.showModal,
     }));
 
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      auth: { user, session_id },
+      loadingFavoriteMovies,
+      loadingMoviesWatchlist
+    } = this.state;
+
+    if (!_.isEqual(prevState.auth, this.state.auth) && user) {
+      this.getFavoriteMovies(user, session_id);
+      this.getMoviesWatchlist(user, session_id);
+    }
+
+    if (prevState.loadingFavoriteMovies !== loadingFavoriteMovies) {
+      this.getFavoriteMovies(user, session_id);
+    }
+
+    if (prevState.loadingMoviesWatchlist !== loadingMoviesWatchlist) {
+      this.getMoviesWatchlist(user, session_id);
+    }
+  }
+
   componentDidMount() {
     const session_id = cookies.get('session_id');
 
@@ -127,17 +143,9 @@ class App extends Component {
           session_id: session_id,
         },
       }).then(user => {
-        this.updateAuth({ user: user, session_id: session_id });
-        // this.updateUser(user);
-        // this.updateSessionId(session_id);
-        this.getFavoriteMovies(
-          this.state.auth.user,
-          this.state.auth.session_id
-        );
-        this.getMoviesWatchlist(
-          this.state.auth.user,
-          this.state.auth.session_id
-        );
+        this.updateAuth({ user, session_id });
+        this.getFavoriteMovies(user, session_id);
+        this.getMoviesWatchlist(user, session_id);
       });
     }
   }
@@ -146,8 +154,6 @@ class App extends Component {
     const {
       filters,
       total_pages,
-      // user,
-      // session_id,
       favoriteMovies,
       moviesWatchlist,
       showModal,
@@ -159,13 +165,12 @@ class App extends Component {
         value={{
           auth: auth,
           updateAuth: this.updateAuth,
-          // user: user,
-          // updateUser: this.updateUser,
-          // updateSessionId: this.updateSessionId,
           session_id: this.state.session_id,
           onLogOut: this.onLogOut,
           getFavoriteMovies: this.getFavoriteMovies,
           getMoviesWatchlist: this.getMoviesWatchlist,
+          onToggleFavoriteMovies: this.onToggleFavoriteMovies,
+          onToggleMoviesWatchlist: this.onToggleMoviesWatchlist,
           favoriteMovies: favoriteMovies,
           moviesWatchlist: moviesWatchlist,
           toggleModalLogin: this.toggleModalLogin,
