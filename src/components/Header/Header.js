@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AppContextHOC from './../HOC/AppContextHOC';
 import UserMenu from './UserMenu';
@@ -16,13 +17,13 @@ class Header extends Component {
     } = this.props;
 
     return (
-      <nav className="navbar navbar-dark bg-primary">
+      <nav className="navbar navbar-dark bg-primary mb-4">
         <div className="container">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link" href="#home">
+              <Link className="nav-link" to="/">
                 Home
-              </a>
+              </Link>
             </li>
           </ul>
 

@@ -75,8 +75,21 @@ export default Component =>
 
     render() {
       const { movies } = this.state;
-      const { user, session_id } = this.props;
+      const {
+        favoriteMovies,
+        moviesWatchlist,
+        onToggleFavoriteMovies,
+        onToggleMoviesWatchlist,
+      } = this.props;
 
-      return <Component movies={movies} user={user} session_id={session_id} />;
+      return (
+        <Component
+          movies={movies}
+          favoriteMovies={favoriteMovies}
+          moviesWatchlist={moviesWatchlist}
+          onToggleFavoriteMovies={onToggleFavoriteMovies}
+          onToggleMoviesWatchlist={onToggleMoviesWatchlist}
+        />
+      );
     }
   };

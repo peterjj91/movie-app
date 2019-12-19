@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
-
 import CallApi from '../../../api/api';
 import AppContextHOC from '../../HOC/AppContextHOC';
 
@@ -58,7 +57,6 @@ function ToggleFavorite({
 ToggleFavorite.propTypes = {
   id: PropTypes.number.isRequired,
   auth: PropTypes.object,
-  getFavoriteMovies: PropTypes.func,
   favoriteMovies: PropTypes.array,
   toggleModalLogin: PropTypes.func,
 };
