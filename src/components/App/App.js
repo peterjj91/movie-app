@@ -82,10 +82,12 @@ class App extends Component {
         <Router>
           <Header />
 
-          <Switch>
-            <Route path="/movie/:id" component={MoviePage} />
-            <Route exec path="/" component={MoviesPage} />
-          </Switch>
+          <div className="content">
+            <Switch>
+              <Route path="/movie/:id" component={MoviePage} />
+              <Route exec path="/" component={MoviesPage} />
+            </Switch>
+          </div>
 
           <Login />
         </Router>

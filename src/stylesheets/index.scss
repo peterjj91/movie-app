@@ -3,6 +3,10 @@
   margin: 0 auto;
 }
 
+.content {
+  padding-bottom: 20px;
+}
+
 .invalid-feedback {
   display: block;
 }
@@ -15,6 +19,24 @@
       & > * {
         cursor: pointer;
       }
+    }
+  }
+}
+
+.movie {
+  &__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      > * {
+        vertical-align: bottom;
+      }
+    }
+
+    [class*='MuiIcon'] {
+      // cursor: pointer;
     }
   }
 }
