@@ -3,6 +3,7 @@ import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import CallApi from '../../../api/api';
 import AppContextHOC from '../../HOC/AppContextHOC';
+import MoviesHOC from '../MoviesHOC';
 
 function ToggleFavorite({
   id,
@@ -59,6 +60,8 @@ ToggleFavorite.propTypes = {
   auth: PropTypes.object,
   favoriteMovies: PropTypes.array,
   toggleModalLogin: PropTypes.func,
+  onToggleFavoriteMovies: PropTypes.func,
 };
 
 export default AppContextHOC(ToggleFavorite);
+// export default MoviesHOC(ToggleFavorite);

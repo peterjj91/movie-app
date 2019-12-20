@@ -20,7 +20,7 @@ export default class Pagination extends Component {
 
     return (
       <div className="mb-3 mt-3">
-        <div className="btn-group mr-3">
+        <div className="btn-group d-flex mb-3">
           <button
             type="button"
             className="btn btn-light"
@@ -39,9 +39,10 @@ export default class Pagination extends Component {
           </button>
         </div>
 
-        <span>
-          {page} из {total_pages}
-        </span>
+        <div className="d-flex justify-content-center">
+          <strong>{page}</strong> <span className="ml-2 mr-2">из</span>
+          <strong>{total_pages}</strong>
+        </div>
       </div>
     );
   }

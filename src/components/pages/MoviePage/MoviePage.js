@@ -1,14 +1,25 @@
 import React from 'react';
+import { NavLink as RRNavLink } from 'react-router-dom';
+import classnames from 'classnames';
 import Icon from '@material-ui/core/Icon';
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
-// import ToggleFavorite from '../../../components/Movies/ToggleFavorite';
+import ToggleFavorite from '../../../components/Movies/ToggleFavorite';
 // import ToggleWatchlist from '../../../components/Movies/ToggleWatchlist';
+import MovieDetail from '../../Movies/MovieDetail';
+import MovieVideos from '../../Movies/MovieVideos';
+import MovieCredits from '../../Movies/MovieCredits';
 import AppContextHOC from '../../HOC/AppContextHOC';
 import CallApi from '../../../api/api';
 
 class MoviePage extends React.Component {
   state = {
     movie: null,
+    activeTab: null,
+  };
+
+  toggleTab = tab => {
+    if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
   };
 
   componentDidMount() {
@@ -17,20 +28,24 @@ class MoviePage extends React.Component {
     CallApi.get(`/movie/${match.params.id}`).then(movie =>
       this.setState({ movie })
     );
+    this.setState({
+      activeTab: match.params.tab ? match.params.tab : 'detail',
+    });
   }
 
   render() {
-    const { movie } = this.state;
+    const { movie, activeTab } = this.state;
+    const { match } = this.props;
 
     return (
       movie && (
         <div className="container-fluid">
-          <div className="row">
+          <div className="row mb-4">
             <div className="col col-md-4">
               <img
                 src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}`}
                 alt=""
-                className="img-fluid"
+                className="img-fluid card-img-top card-img--height"
               />
             </div>
             <div className="col col-md-8">
@@ -38,9 +53,13 @@ class MoviePage extends React.Component {
 
               <p className="mb-5">{movie.overview}</p>
 
+              <p className="mb-5">
+                Рейтинг Пользователей: {movie.vote_average}
+              </p>
+
               <ul className="list-group list-group-horizontal-md movie__list">
                 <li className="list-group-item">
-                  <Icon className="mr-2">bookmark</Icon>в избранное
+                  {/* <ToggleFavorite />  */}в избранное
                 </li>
                 <li className="list-group-item">
                   <Icon className="mr-2">star</Icon>в список просмотра
@@ -48,6 +67,62 @@ class MoviePage extends React.Component {
               </ul>
             </div>
           </div>
+
+          <Nav tabs>
+            <NavItem>
+              <NavLink
+                tag={RRNavLink}
+                to={`/movie/${match.params.id}/detail`}
+                className={classnames('nav-link', {
+                  active: activeTab === 'detail',
+                })}
+                onClick={() => {
+                  this.toggleTab('detail');
+                }}
+              >
+                Детали
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                tag={RRNavLink}
+                to={`/movie/${match.params.id}/videos`}
+                className={classnames('nav-link', {
+                  active: activeTab === 'videos',
+                })}
+                onClick={() => {
+                  this.toggleTab('videos');
+                }}
+              >
+                Похожие фильмы
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                tag={RRNavLink}
+                to={`/movie/${match.params.id}/credits`}
+                className={classnames('nav-link', {
+                  active: activeTab === 'credits',
+                })}
+                onClick={() => {
+                  this.toggleTab('credits');
+                }}
+              >
+                Актёры
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <TabContent activeTab={activeTab} className="pt-3">
+            <TabPane tabId="detail">
+              <MovieDetail />
+            </TabPane>
+            <TabPane tabId="videos">
+              <MovieVideos />
+            </TabPane>
+            <TabPane tabId="credits">
+              <MovieCredits />
+            </TabPane>
+          </TabContent>
         </div>
       )
     );

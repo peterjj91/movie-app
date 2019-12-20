@@ -18,7 +18,7 @@ class Header extends Component {
 
     return (
       <nav className="navbar navbar-dark bg-primary mb-4">
-        <div className="container">
+        <div className="container-fluid pl-0 pr-0 pl-xl-3 pr-xl-3">
           <ul className="navbar-nav">
             <li className="nav-item active">
               <Link className="nav-link" to="/">

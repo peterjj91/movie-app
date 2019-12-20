@@ -80,6 +80,7 @@ export default Component =>
         moviesWatchlist,
         onToggleFavoriteMovies,
         onToggleMoviesWatchlist,
+        toggleModalLogin,
       } = this.props;
 
       return (
@@ -89,6 +90,7 @@ export default Component =>
           moviesWatchlist={moviesWatchlist}
           onToggleFavoriteMovies={onToggleFavoriteMovies}
           onToggleMoviesWatchlist={onToggleMoviesWatchlist}
+          toggleModalLogin={toggleModalLogin}
         />
       );
     }

@@ -34,8 +34,11 @@ MoviesList.defaultProps = {
 };
 
 MoviesList.propTypes = {
+  favoriteMovies: PropTypes.array,
+  moviesWatchlist: PropTypes.array,
   movies: PropTypes.array,
   onToggleFavoriteMovies: PropTypes.func,
+  onToggleMoviesWatchlist: PropTypes.func,
 };
 
 export default MoviesHOC(MoviesList);

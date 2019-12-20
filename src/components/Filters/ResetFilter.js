@@ -10,7 +10,11 @@ export default class ResetFilter extends Component {
     const { onResetFilters } = this.props;
 
     return (
-      <button type="button" className="btn btn-danger" onClick={onResetFilters}>
+      <button
+        type="button"
+        className="btn btn-danger d-flex w-100 justify-content-center"
+        onClick={onResetFilters}
+      >
         Сбросить фильтры
       </button>
     );

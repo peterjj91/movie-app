@@ -21,17 +21,20 @@ const Genres = ({
     {showGenres &&
       all_genres.map(genre => {
         return (
-          <div className="form-group form-check" key={genre.id}>
+          <div className="custom-control custom-checkbox" key={genre.id}>
             <input
               type="checkbox"
-              className="form-check-input"
+              className="custom-control-input"
               id={`genre-${genre.id}`}
               name="with_genres"
               checked={with_genres.includes(genre.id)}
               value={genre.id}
               onChange={onChangeGenre}
             />
-            <label htmlFor={`genre-${genre.id}`} className="form-check-label">
+            <label
+              className="custom-control-label"
+              htmlFor={`genre-${genre.id}`}
+            >
               {genre.name}
             </label>
           </div>

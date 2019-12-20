@@ -84,7 +84,8 @@ class App extends Component {
 
           <div className="content">
             <Switch>
-              <Route path="/movie/:id" component={MoviePage} />
+              <Route path="/movie/:id/:tab" component={MoviePage} />
+              <Route exec path="/movie/:id" component={MoviePage} />
               <Route exec path="/" component={MoviesPage} />
             </Switch>
           </div>
