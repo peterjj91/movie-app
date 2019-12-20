@@ -6,10 +6,10 @@ export default Component =>
     render() {
       return (
         <>
-        {/* <MoviesContext.Consumer>
+          {/* <MoviesContext.Consumer>
         {context => <Component {...this.props} {...context} />}
         </MoviesContext.Consumer> */}
-          </>
-      )
+        </>
+      );
     }
   };
