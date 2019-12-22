@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink as RRNavLink } from 'react-router-dom';
+import classnames from 'classnames';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
 import ToggleFavorite from '../../ToggleFavorite';
@@ -77,7 +78,9 @@ class MoviePage extends React.Component {
                 <NavLink
                   tag={RRNavLink}
                   to={`/movie/${match.params.id}/detail`}
-                  className="nav-link"
+                  className={classnames('nav-link', {
+                    active: activeTab === 'detail',
+                  })}
                   onClick={() => {
                     this.toggleTab('detail');
                   }}

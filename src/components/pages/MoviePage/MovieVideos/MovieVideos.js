@@ -20,7 +20,7 @@ export default function MovieVideos({ movie }) {
       {videos.map(video => {
         return (
           <div className="col-12 col-md-6" key={video.key}>
-            <div class="embed-responsive embed-responsive-16by9 mb-3">
+            <div className="embed-responsive embed-responsive-16by9 mb-3">
               <iframe
                 title={video.name}
                 width="560"
