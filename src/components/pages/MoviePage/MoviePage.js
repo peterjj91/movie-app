@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink as RRNavLink } from 'react-router-dom';
-import classnames from 'classnames';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
 import ToggleFavorite from '../../ToggleFavorite';
@@ -36,6 +35,7 @@ class MoviePage extends React.Component {
   render() {
     const { movie, activeTab } = this.state;
     const { match } = this.props;
+    console.log();
 
     return (
       movie && (
@@ -62,7 +62,8 @@ class MoviePage extends React.Component {
                   <ToggleFavorite id={movie.id} className="icon" /> в избранное
                 </li>
                 <li className="list-group-item">
-                  <ToggleWatchlist id={movie.id} className="icon" /> в список просмотра
+                  <ToggleWatchlist id={movie.id} className="icon" /> в список
+                  просмотра
                 </li>
               </ul>
             </div>
@@ -73,9 +74,7 @@ class MoviePage extends React.Component {
               <NavLink
                 tag={RRNavLink}
                 to={`/movie/${match.params.id}/detail`}
-                className={classnames('nav-link', {
-                  active: activeTab === 'detail',
-                })}
+                className="nav-link"
                 onClick={() => {
                   this.toggleTab('detail');
                 }}
@@ -87,23 +86,19 @@ class MoviePage extends React.Component {
               <NavLink
                 tag={RRNavLink}
                 to={`/movie/${match.params.id}/videos`}
-                className={classnames('nav-link', {
-                  active: activeTab === 'videos',
-                })}
+                className="nav-link"
                 onClick={() => {
                   this.toggleTab('videos');
                 }}
               >
-                Похожие фильмы
+                Видео
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
                 tag={RRNavLink}
                 to={`/movie/${match.params.id}/credits`}
-                className={classnames('nav-link', {
-                  active: activeTab === 'credits',
-                })}
+                className="nav-link"
                 onClick={() => {
                   this.toggleTab('credits');
                 }}
