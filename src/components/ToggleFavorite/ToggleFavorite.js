@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
-import CallApi from '../../../api/api';
-import AppContextHOC from '../../HOC/AppContextHOC';
-import MoviesHOC from '../MoviesHOC';
+
+import CallApi from '../../api/api';
+import AppContextHOC from '../HOC/AppContextHOC';
 
 function ToggleFavorite({
   id,
   auth,
   favoriteMovies,
   toggleModalLogin,
-  onToggleFavoriteMovies,
+  getFavoriteMovies,
 }) {
   const isMovieFavorite = favoriteMovies.some(film => film.id === id);
   const [isSelected, setIsSelected] = useState(false);
@@ -24,7 +24,6 @@ function ToggleFavorite({
     if (!session_id) {
       return toggleModalLogin();
     }
-
     const queryBody = {
       params: {
         session_id: session_id,
@@ -35,13 +34,12 @@ function ToggleFavorite({
         favorite: !isSelected,
       },
     };
-
     CallApi.post(`/account/${user.id}/favorite`, queryBody)
       .then(() => {
         setIsSelected(!isSelected);
       })
       .then(() => {
-        onToggleFavoriteMovies();
+        getFavoriteMovies(user, session_id);
       })
       .catch(error => {
         console.log('onToggleFavorite error -', error);
@@ -49,7 +47,7 @@ function ToggleFavorite({
   };
 
   return (
-    <Icon onClick={() => onToggleFavorite(id)}>
+    <Icon onClick={() => onToggleFavorite(id)} className="icon">
       {isSelected ? 'star' : 'star_border'}
     </Icon>
   );
@@ -60,8 +58,7 @@ ToggleFavorite.propTypes = {
   auth: PropTypes.object,
   favoriteMovies: PropTypes.array,
   toggleModalLogin: PropTypes.func,
-  onToggleFavoriteMovies: PropTypes.func,
+  getFavoriteMovies: PropTypes.func,
 };
 
 export default AppContextHOC(ToggleFavorite);
-// export default MoviesHOC(ToggleFavorite);

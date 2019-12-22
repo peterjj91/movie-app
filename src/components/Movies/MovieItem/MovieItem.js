@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import ToggleFavorite from '../ToggleFavorite';
-import ToggleWatchlist from '../ToggleWatchlist';
+import ToggleFavorite from '../../ToggleFavorite';
+import ToggleWatchlist from '../../ToggleWatchlist';
 
 export default class MovieItem extends Component {
   static propTypes = {
@@ -11,13 +11,7 @@ export default class MovieItem extends Component {
   };
 
   render() {
-    const {
-      item,
-      favoriteMovies,
-      onToggleFavoriteMovies,
-      onToggleMoviesWatchlist,
-      moviesWatchlist,
-    } = this.props;
+    const { item } = this.props;
 
     return (
       <div className="card card" style={{ width: '100%' }}>
@@ -37,18 +31,10 @@ export default class MovieItem extends Component {
         </div>
         <div className="card-footer d-flex justify-content-between">
           <div className="card-footer__link">
-            <ToggleFavorite
-              id={item.id}
-              favoriteMovies={favoriteMovies}
-              onToggleFavoriteMovies={onToggleFavoriteMovies}
-            />
+            <ToggleFavorite id={item.id} />
           </div>
           <div className="card-footer__link">
-            <ToggleWatchlist
-              id={item.id}
-              moviesWatchlist={moviesWatchlist}
-              onToggleMoviesWatchlist={onToggleMoviesWatchlist}
-            />
+            <ToggleWatchlist id={item.id} />
           </div>
         </div>
       </div>

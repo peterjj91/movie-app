@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink as RRNavLink } from 'react-router-dom';
 import classnames from 'classnames';
-import Icon from '@material-ui/core/Icon';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
-import ToggleFavorite from '../../../components/Movies/ToggleFavorite';
-// import ToggleWatchlist from '../../../components/Movies/ToggleWatchlist';
-import MovieDetail from '../../Movies/MovieDetail';
-import MovieVideos from '../../Movies/MovieVideos';
-import MovieCredits from '../../Movies/MovieCredits';
+import ToggleFavorite from '../../ToggleFavorite';
+import ToggleWatchlist from '../../ToggleWatchlist';
+import MovieDetail from './MovieDetail';
+import MovieVideos from './MovieVideos';
+import MovieCredits from './MovieCredits';
 import AppContextHOC from '../../HOC/AppContextHOC';
 import CallApi from '../../../api/api';
 
@@ -59,10 +59,10 @@ class MoviePage extends React.Component {
 
               <ul className="list-group list-group-horizontal-md movie__list">
                 <li className="list-group-item">
-                  {/* <ToggleFavorite />  */}в избранное
+                  <ToggleFavorite id={movie.id} className="icon" /> в избранное
                 </li>
                 <li className="list-group-item">
-                  <Icon className="mr-2">star</Icon>в список просмотра
+                  <ToggleWatchlist id={movie.id} className="icon" /> в список просмотра
                 </li>
               </ul>
             </div>
@@ -128,5 +128,10 @@ class MoviePage extends React.Component {
     );
   }
 }
+
+MoviePage.propTypes = {
+  movie: PropTypes.array,
+  activeTab: PropTypes.string,
+};
 
 export default AppContextHOC(MoviePage);

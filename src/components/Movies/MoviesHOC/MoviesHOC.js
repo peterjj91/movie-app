@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+
 import CallApi from '../../../api/api';
 
 export default Component =>
@@ -17,16 +18,11 @@ export default Component =>
       total_pages: PropTypes.number,
       onChangeFilters: PropTypes.func,
       movies: PropTypes.object,
-      favoriteMovies: PropTypes.array,
-      moviesWatchlist: PropTypes.array,
-      getFavoriteMovies: PropTypes.func,
-      getMoviesWatchlist: PropTypes.func,
       onChangeTotalPage: PropTypes.func,
       filters: PropTypes.object,
       user: PropTypes.object,
       id: PropTypes.number,
       session_id: PropTypes.string,
-      toggleModalLogin: PropTypes.func.isRequired,
     };
 
     getMovies = (filters, page) => {
@@ -75,23 +71,7 @@ export default Component =>
 
     render() {
       const { movies } = this.state;
-      const {
-        favoriteMovies,
-        moviesWatchlist,
-        onToggleFavoriteMovies,
-        onToggleMoviesWatchlist,
-        toggleModalLogin,
-      } = this.props;
 
-      return (
-        <Component
-          movies={movies}
-          favoriteMovies={favoriteMovies}
-          moviesWatchlist={moviesWatchlist}
-          onToggleFavoriteMovies={onToggleFavoriteMovies}
-          onToggleMoviesWatchlist={onToggleMoviesWatchlist}
-          toggleModalLogin={toggleModalLogin}
-        />
-      );
+      return <Component movies={movies} />;
     }
   };

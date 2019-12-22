@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 
-import CallApi from '../../../api/api';
-import AppContextHOC from '../../HOC/AppContextHOC';
+import CallApi from '../../api/api';
+import AppContextHOC from '../HOC/AppContextHOC';
 
 function ToggleWatchlist({
   id,
   auth,
   moviesWatchlist,
   toggleModalLogin,
-  onToggleMoviesWatchlist,
+  getMoviesWatchlist,
 }) {
   const isMovieWatchlist = moviesWatchlist.some(film => film.id === id);
   const [isSelected, setIsSelected] = useState(false);
@@ -41,7 +41,7 @@ function ToggleWatchlist({
         setIsSelected(!isSelected);
       })
       .then(() => {
-        onToggleMoviesWatchlist();
+        getMoviesWatchlist(user, session_id);
       })
       .catch(error => {
         console.log('onToggleWatchlist error -', error);
@@ -49,7 +49,7 @@ function ToggleWatchlist({
   };
 
   return (
-    <Icon onClick={() => onToggleWatchlist(id)}>
+    <Icon onClick={() => onToggleWatchlist(id)} className="icon">
       {isSelected ? 'bookmark' : 'bookmark_border'}
     </Icon>
   );
@@ -60,6 +60,7 @@ ToggleWatchlist.propTypes = {
   auth: PropTypes.object,
   moviesWatchlist: PropTypes.array,
   toggleModalLogin: PropTypes.func,
+  getMoviesWatchlist: PropTypes.func
 };
 
 export default AppContextHOC(ToggleWatchlist);
