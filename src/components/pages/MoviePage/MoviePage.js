@@ -114,7 +114,7 @@ class MoviePage extends React.Component {
           </Nav>
           <TabContent activeTab={activeTab} className="pt-3">
             <TabPane tabId="detail">
-              <MovieDetail />
+              <MovieDetail movie={movie} />
             </TabPane>
             <TabPane tabId="videos">
               <MovieVideos />
