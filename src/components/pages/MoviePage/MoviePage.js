@@ -5,6 +5,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
 import ToggleFavorite from '../../ToggleFavorite';
 import ToggleWatchlist from '../../ToggleWatchlist';
+import Spinner from '../../Spinner';
 import MovieDetail from './MovieDetail';
 import MovieVideos from './MovieVideos';
 import MovieCredits from './MovieCredits';
@@ -27,6 +28,7 @@ class MoviePage extends React.Component {
     CallApi.get(`/movie/${match.params.id}`).then(movie =>
       this.setState({ movie })
     );
+
     this.setState({
       activeTab: match.params.tab ? match.params.tab : 'detail',
     });
@@ -35,91 +37,95 @@ class MoviePage extends React.Component {
   render() {
     const { movie, activeTab } = this.state;
     const { match } = this.props;
-    console.log();
 
     return (
-      movie && (
-        <div className="container-fluid">
-          <div className="row mb-4">
-            <div className="col col-md-4">
-              <img
-                src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}`}
-                alt=""
-                className="img-fluid card-img-top card-img--height"
-              />
+      <div className="container-fluid">
+        {movie ? (
+          <>
+            <div className="row mb-4">
+              <div className="col col-md-4">
+                <img
+                  src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}`}
+                  alt=""
+                  className="img-fluid card-img-top card-img--height"
+                />
+              </div>
+              <div className="col col-md-8">
+                <h2 className="mb-5">{movie.title}</h2>
+
+                <p className="mb-5">{movie.overview}</p>
+
+                <p className="mb-5">
+                  Рейтинг Пользователей: {movie.vote_average}
+                </p>
+
+                <ul className="list-group list-group-horizontal-md movie__list">
+                  <li className="list-group-item">
+                    <ToggleFavorite id={movie.id} className="icon" /> в
+                    избранное
+                  </li>
+                  <li className="list-group-item">
+                    <ToggleWatchlist id={movie.id} className="icon" /> в список
+                    просмотра
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div className="col col-md-8">
-              <h2 className="mb-5">{movie.title}</h2>
 
-              <p className="mb-5">{movie.overview}</p>
-
-              <p className="mb-5">
-                Рейтинг Пользователей: {movie.vote_average}
-              </p>
-
-              <ul className="list-group list-group-horizontal-md movie__list">
-                <li className="list-group-item">
-                  <ToggleFavorite id={movie.id} className="icon" /> в избранное
-                </li>
-                <li className="list-group-item">
-                  <ToggleWatchlist id={movie.id} className="icon" /> в список
-                  просмотра
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                tag={RRNavLink}
-                to={`/movie/${match.params.id}/detail`}
-                className="nav-link"
-                onClick={() => {
-                  this.toggleTab('detail');
-                }}
-              >
-                Детали
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                tag={RRNavLink}
-                to={`/movie/${match.params.id}/videos`}
-                className="nav-link"
-                onClick={() => {
-                  this.toggleTab('videos');
-                }}
-              >
-                Видео
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                tag={RRNavLink}
-                to={`/movie/${match.params.id}/credits`}
-                className="nav-link"
-                onClick={() => {
-                  this.toggleTab('credits');
-                }}
-              >
-                Актёры
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent activeTab={activeTab} className="pt-3">
-            <TabPane tabId="detail">
-              <MovieDetail movie={movie} />
-            </TabPane>
-            <TabPane tabId="videos">
-              <MovieVideos />
-            </TabPane>
-            <TabPane tabId="credits">
-              <MovieCredits />
-            </TabPane>
-          </TabContent>
-        </div>
-      )
+            <Nav tabs>
+              <NavItem>
+                <NavLink
+                  tag={RRNavLink}
+                  to={`/movie/${match.params.id}/detail`}
+                  className="nav-link"
+                  onClick={() => {
+                    this.toggleTab('detail');
+                  }}
+                >
+                  Детали
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  tag={RRNavLink}
+                  to={`/movie/${match.params.id}/videos`}
+                  className="nav-link"
+                  onClick={() => {
+                    this.toggleTab('videos');
+                  }}
+                >
+                  Видео
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  tag={RRNavLink}
+                  to={`/movie/${match.params.id}/credits`}
+                  className="nav-link"
+                  onClick={() => {
+                    this.toggleTab('credits');
+                  }}
+                >
+                  Актёры
+                </NavLink>
+              </NavItem>
+            </Nav>
+            <TabContent activeTab={activeTab} className="pt-3">
+              <TabPane tabId="detail">
+                {activeTab === 'detail' && <MovieDetail movie={movie} />}
+              </TabPane>
+              <TabPane tabId="videos">
+                {activeTab === 'videos' && <MovieVideos movie={movie} />}
+              </TabPane>
+              <TabPane tabId="credits">
+                {activeTab === 'credits' && <MovieCredits movie={movie} />}
+              </TabPane>
+            </TabContent>
+          </>
+        ) : (
+          <Spinner className="spinner--center" />
+        )}
+      </div>
     );
   }
 }

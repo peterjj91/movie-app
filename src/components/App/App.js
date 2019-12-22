@@ -139,14 +139,16 @@ class App extends Component {
         }}
       >
         <Router>
-          <Header />
+          <div className="wrapper">
+            <div className="content">
+              <Header />
 
-          <div className="content">
-            <Switch>
-              <Route path="/movie/:id/:tab" component={MoviePage} />
-              <Route exec path="/movie/:id" component={MoviePage} />
-              <Route exec path="/" component={MoviesPage} />
-            </Switch>
+              <Switch>
+                <Route path="/movie/:id/:tab" component={MoviePage} />
+                <Route exec path="/movie/:id" component={MoviePage} />
+                <Route exec path="/" component={MoviesPage} />
+              </Switch>
+            </div>
           </div>
 
           <Login />
