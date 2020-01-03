@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CallApi from '../../../api/api';
+import CallApi, { IMAGE_URL } from '../../../api/api';
 
 import Spinner from '../../../components/UIComponents/Spinner';
 
@@ -21,7 +21,7 @@ export default function MovieCredits({ movie }) {
         <div key={actor.id} className="col col-md-2 mb-3">
           <div className="mb-3">
             <img
-              src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+              src={`${IMAGE_URL}/w500${actor.profile_path}`}
               alt={actor.name}
               className="img-fluid"
             />

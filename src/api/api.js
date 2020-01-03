@@ -3,6 +3,7 @@ import queryString from 'query-string';
 // peter_movie
 // 123123
 
+export const IMAGE_URL = 'https://image.tmdb.org/t/p';
 export const API_URL = 'https://api.themoviedb.org/3';
 
 export const API_KEY_3 = '1b65d0b8218370f2ca901397cbb76132';

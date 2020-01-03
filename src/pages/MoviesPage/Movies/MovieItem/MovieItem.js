@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { IMAGE_URL } from '../../../../api/api';
 import ToggleFavorite from '../../../../components/UIComponents/ToggleFavorite';
 import ToggleWatchlist from '../../../../components/UIComponents/ToggleWatchlist';
 
@@ -18,8 +19,7 @@ export default class MovieItem extends Component {
         <Link to={`/movie/${item.id}`}>
           <img
             className="card-img-top card-img--height"
-            src={`https://image.tmdb.org/t/p/w500${item.backdrop_path ||
-              item.poster_path}`}
+            src={`${IMAGE_URL}/w500${item.backdrop_path || item.poster_path}`}
             alt=""
           />
         </Link>
