@@ -1,0 +1,18 @@
+.list {
+  .item {
+    background-color: none;
+    padding: 0;
+    border: none;
+  }
+}
+
+.toggleButton {
+  &[class*='MuiButton-root'] {
+    padding: 0.75rem 1.25rem;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0;
+    text-transform: none;
+    outline: none;
+  }
+}

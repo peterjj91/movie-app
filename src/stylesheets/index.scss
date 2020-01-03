@@ -43,8 +43,10 @@ body {
     &__link {
       color: black;
 
-      & > * {
-        cursor: pointer;
+      .MuiButton-root {
+        padding: 0;
+        min-width: auto;
+        outline: none;
       }
     }
   }

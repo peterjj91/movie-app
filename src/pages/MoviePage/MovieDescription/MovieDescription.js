@@ -1,8 +1,10 @@
 import React from 'react';
+import classnames from 'classnames';
 
 import Image from '../../../components/UIComponents/Image';
 import ToggleFavorite from '../../../components/UIComponents/ToggleFavorite';
 import ToggleWatchlist from '../../../components/UIComponents/ToggleWatchlist';
+import styles from './styles.module.scss';
 
 export default function MovieDescription({ movie }) {
   return (
@@ -17,13 +19,21 @@ export default function MovieDescription({ movie }) {
 
         <p className="mb-5">Рейтинг Пользователей: {movie.vote_average}</p>
 
-        <ul className="list-group list-group-horizontal-md movie__list">
-          <li className="list-group-item">
-            <ToggleFavorite id={movie.id} className="icon" /> в избранное
+        <ul
+          className={classnames(
+            'list-group list-group-horizontal-md movie__list',
+            styles.list
+          )}
+        >
+          <li className={classnames('list-group-item', styles.item)}>
+            <ToggleFavorite id={movie.id} className={styles.toggleButton}>
+              в избранное
+            </ToggleFavorite>
           </li>
-          <li className="list-group-item">
-            <ToggleWatchlist id={movie.id} className="icon" /> в список
-            просмотра
+          <li className={classnames('list-group-item', styles.item)}>
+            <ToggleWatchlist id={movie.id} className={styles.toggleButton}>
+              в список просмотра
+            </ToggleWatchlist>
           </li>
         </ul>
       </div>

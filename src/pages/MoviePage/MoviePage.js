@@ -20,7 +20,7 @@ class MoviePage extends React.Component {
   };
 
   state = {
-    loading: false,
+    loading: true,
     movie: {},
     activeTab: null,
   };
@@ -31,8 +31,6 @@ class MoviePage extends React.Component {
 
   componentDidMount() {
     const { match } = this.props;
-
-    this.setState({ loading: true });
 
     CallApi.get(`/movie/${match.params.id}`)
       .then(movie => this.setState({ movie }))

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Icon from '@material-ui/core/Icon';
+import { Icon, Button, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import CallApi from '../../../api/api';
@@ -11,6 +11,8 @@ function ToggleFavorite({
   favoriteMovies,
   toggleModalLogin,
   getFavoriteMovies,
+  children,
+  className,
 }) {
   const isMovieFavorite = favoriteMovies.some(film => film.id === id);
   const [isSelected, setIsSelected] = useState(false);
@@ -47,9 +49,10 @@ function ToggleFavorite({
   };
 
   return (
-    <Icon onClick={() => onToggleFavorite(id)} className="icon">
-      {isSelected ? 'star' : 'star_border'}
-    </Icon>
+    <Button onClick={() => onToggleFavorite(id)} className={className}>
+      <Icon className="icon">{isSelected ? 'star' : 'star_border'}</Icon>
+      {children && <Box ml={1}>{children}</Box>}
+    </Button>
   );
 }
 
@@ -59,6 +62,8 @@ ToggleFavorite.propTypes = {
   favoriteMovies: PropTypes.array,
   toggleModalLogin: PropTypes.func,
   getFavoriteMovies: PropTypes.func,
+  children: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default AppContextHOC(ToggleFavorite);

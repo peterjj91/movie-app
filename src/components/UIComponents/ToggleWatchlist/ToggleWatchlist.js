@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Icon from '@material-ui/core/Icon';
+import { Icon, Button, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import CallApi from '../../../api/api';
@@ -11,6 +11,8 @@ function ToggleWatchlist({
   moviesWatchlist,
   toggleModalLogin,
   getMoviesWatchlist,
+  children,
+  className,
 }) {
   const isMovieWatchlist = moviesWatchlist.some(film => film.id === id);
   const [isSelected, setIsSelected] = useState(false);
@@ -49,9 +51,12 @@ function ToggleWatchlist({
   };
 
   return (
-    <Icon onClick={() => onToggleWatchlist(id)} className="icon">
-      {isSelected ? 'bookmark' : 'bookmark_border'}
-    </Icon>
+    <Button onClick={() => onToggleWatchlist(id)} className={className}>
+      <Icon className="icon">
+        {isSelected ? 'bookmark' : 'bookmark_border'}
+      </Icon>
+      {children && <Box ml={1}>{children}</Box>}
+    </Button>
   );
 }
 
@@ -61,6 +66,8 @@ ToggleWatchlist.propTypes = {
   moviesWatchlist: PropTypes.array,
   toggleModalLogin: PropTypes.func,
   getMoviesWatchlist: PropTypes.func,
+  children: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default AppContextHOC(ToggleWatchlist);
