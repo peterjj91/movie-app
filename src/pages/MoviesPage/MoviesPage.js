@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Filters from '../../Filters';
-import MoviesList from '../../Movies/MoviesList';
-import AppContextHOC from '../../HOC/AppContextHOC';
+import Filters from './Filters';
+import MoviesList from './Movies/MoviesList';
+import AppContextHOC from '../../components/HOC/AppContextHOC';
 
 class MoviesPage extends Component {
   constructor() {

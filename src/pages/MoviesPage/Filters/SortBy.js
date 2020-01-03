@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import UISelect from './../UISelect';
+import UISelect from '../../../components/UIComponents/Select';
 
 export default class SortBy extends PureComponent {
   static propTypes = {

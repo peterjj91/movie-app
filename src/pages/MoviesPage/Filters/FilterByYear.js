@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import UISelect from './../UISelect';
+import Select from '../../../components/UIComponents/Select';
 
 export default class SortBy extends PureComponent {
   static propTypes = {
@@ -24,7 +24,7 @@ export default class SortBy extends PureComponent {
     const options = this.yearsRange();
 
     return (
-      <UISelect
+      <Select
         id="primary_release_year"
         name="primary_release_year"
         value={primary_release_year}
@@ -38,7 +38,7 @@ export default class SortBy extends PureComponent {
             </option>
           );
         })}
-      </UISelect>
+      </Select>
     );
   }
 }

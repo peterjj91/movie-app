@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import ToggleFavorite from '../../ToggleFavorite';
-import ToggleWatchlist from '../../ToggleWatchlist';
+import ToggleFavorite from '../../../../components/UIComponents/ToggleFavorite';
+import ToggleWatchlist from '../../../../components/UIComponents/ToggleWatchlist';
 
 export default class MovieItem extends Component {
   static propTypes = {

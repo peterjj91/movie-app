@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import CallApi from '../../../api/api';
+import CallApi from '../../../../api/api';
 
 export default Component =>
   class MoviesHOC extends PureComponent {

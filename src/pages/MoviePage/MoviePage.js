@@ -4,18 +4,24 @@ import { NavLink as RRNavLink } from 'react-router-dom';
 import classnames from 'classnames';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
-import ToggleFavorite from '../../ToggleFavorite';
-import ToggleWatchlist from '../../ToggleWatchlist';
-import Spinner from '../../Spinner';
+import Spinner from '../../components/UIComponents/Spinner';
+import MovieDescription from './MovieDescription';
 import MovieDetail from './MovieDetail';
 import MovieVideos from './MovieVideos';
 import MovieCredits from './MovieCredits';
-import AppContextHOC from '../../HOC/AppContextHOC';
-import CallApi from '../../../api/api';
+import AppContextHOC from '../../components/HOC/AppContextHOC';
+import CallApi from '../../api/api';
 
 class MoviePage extends React.Component {
+  static propTypes = {
+    movie: PropTypes.array,
+    activeTab: PropTypes.string,
+    loading: PropTypes.bool,
+  };
+
   state = {
-    movie: null,
+    loading: false,
+    movie: {},
     activeTab: null,
   };
 
@@ -26,52 +32,29 @@ class MoviePage extends React.Component {
   componentDidMount() {
     const { match } = this.props;
 
-    CallApi.get(`/movie/${match.params.id}`).then(movie =>
-      this.setState({ movie })
-    );
+    this.setState({ loading: true });
 
-    this.setState({
-      activeTab: match.params.tab ? match.params.tab : 'detail',
-    });
+    CallApi.get(`/movie/${match.params.id}`)
+      .then(movie => this.setState({ movie }))
+      .then(() => {
+        this.setState(prevState => ({
+          activeTab: match.params.tab ? match.params.tab : 'detail',
+          loading: false,
+        }));
+      });
   }
 
   render() {
-    const { movie, activeTab } = this.state;
+    const { movie, activeTab, loading } = this.state;
     const { match } = this.props;
 
     return (
       <div className="container-fluid">
-        {movie ? (
+        {loading ? (
+          <Spinner className="spinner--center" />
+        ) : (
           <>
-            <div className="row mb-4">
-              <div className="col col-md-4">
-                <img
-                  src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}`}
-                  alt=""
-                  className="img-fluid card-img-top card-img--height"
-                />
-              </div>
-              <div className="col col-md-8">
-                <h2 className="mb-5">{movie.title}</h2>
-
-                <p className="mb-5">{movie.overview}</p>
-
-                <p className="mb-5">
-                  Рейтинг Пользователей: {movie.vote_average}
-                </p>
-
-                <ul className="list-group list-group-horizontal-md movie__list">
-                  <li className="list-group-item">
-                    <ToggleFavorite id={movie.id} className="icon" /> в
-                    избранное
-                  </li>
-                  <li className="list-group-item">
-                    <ToggleWatchlist id={movie.id} className="icon" /> в список
-                    просмотра
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <MovieDescription movie={movie} />
 
             <Nav tabs>
               <NavItem>
@@ -113,29 +96,23 @@ class MoviePage extends React.Component {
                 </NavLink>
               </NavItem>
             </Nav>
+
             <TabContent activeTab={activeTab} className="pt-3">
-              <TabPane tabId="detail">
+              <TabPane id="detail">
                 {activeTab === 'detail' && <MovieDetail movie={movie} />}
               </TabPane>
-              <TabPane tabId="videos">
+              <TabPane id="videos">
                 {activeTab === 'videos' && <MovieVideos movie={movie} />}
               </TabPane>
-              <TabPane tabId="credits">
+              <TabPane id="credits">
                 {activeTab === 'credits' && <MovieCredits movie={movie} />}
               </TabPane>
             </TabContent>
           </>
-        ) : (
-          <Spinner className="spinner--center" />
         )}
       </div>
     );
   }
 }
-
-MoviePage.propTypes = {
-  movie: PropTypes.array,
-  activeTab: PropTypes.string,
-};
 
 export default AppContextHOC(MoviePage);

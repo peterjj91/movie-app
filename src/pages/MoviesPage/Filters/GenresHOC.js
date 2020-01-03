@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import CallApi from '../../api/api';
+import CallApi from '../../../api/api';
 
 export default Component =>
   class GenresHOC extends PureComponent {

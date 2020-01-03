@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CallApi from '../../../../api/api';
+import CallApi from '../../../api/api';
 
-import Spinner from '../../../Spinner';
+import Spinner from '../../../components/UIComponents/Spinner';
 
 export default function MovieVideos({ movie }) {
   const [videos, setVideos] = useState([]);

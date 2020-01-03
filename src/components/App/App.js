@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import Cookies from 'universal-cookie';
 import _ from 'lodash';
 
-import MoviesPage from '../pages/MoviesPage';
-import MoviePage from '../pages/MoviePage';
+import MoviesPage from '../../pages/MoviesPage';
+import MoviePage from '../../pages/MoviePage';
 import Header from './../Header';
 import Login from '../Login';
 import CallApi from './../../api/api';
@@ -144,8 +144,7 @@ class App extends Component {
               <Header />
 
               <Switch>
-                <Route path="/movie/:id/:tab" component={MoviePage} />
-                <Route exec path="/movie/:id" component={MoviePage} />
+                <Route path="/movie/:id" component={MoviePage} />
                 <Route exec path="/" component={MoviesPage} />
               </Switch>
             </div>
