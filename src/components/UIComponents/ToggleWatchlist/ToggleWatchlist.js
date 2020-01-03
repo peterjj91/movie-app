@@ -60,7 +60,7 @@ ToggleWatchlist.propTypes = {
   auth: PropTypes.object,
   moviesWatchlist: PropTypes.array,
   toggleModalLogin: PropTypes.func,
-  getMoviesWatchlist: PropTypes.func
+  getMoviesWatchlist: PropTypes.func,
 };
 
 export default AppContextHOC(ToggleWatchlist);

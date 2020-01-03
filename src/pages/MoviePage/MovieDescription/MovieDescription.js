@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Image from '../../../components/UIComponents/Image'
+import Image from '../../../components/UIComponents/Image';
 import ToggleFavorite from '../../../components/UIComponents/ToggleFavorite';
 import ToggleWatchlist from '../../../components/UIComponents/ToggleWatchlist';
 
