@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router';
 import CallApi from '../../../api/api';
 
 import Spinner from '../../../components/UIComponents/Spinner';
 
-export default function MovieVideos({ movie }) {
+function MovieVideos({ match }) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    CallApi.get(`/movie/${movie.id}/videos`)
+    CallApi.get(`/movie/${match.params.id}/videos`)
       .then(videos => setVideos(videos.results))
       .then(() => setLoading(false));
-  }, [movie.id]);
+  }, [match.params.id]);
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  if (loading) {
+    return <Spinner />;
+  }
+
+  return (
     <div className="row">
       {videos.map(video => {
         return (
@@ -38,3 +41,5 @@ export default function MovieVideos({ movie }) {
     </div>
   );
 }
+
+export default withRouter(MovieVideos);

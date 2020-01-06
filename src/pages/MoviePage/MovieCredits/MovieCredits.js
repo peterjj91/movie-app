@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router';
 import CallApi, { IMAGE_URL } from '../../../api/api';
 
 import Spinner from '../../../components/UIComponents/Spinner';
 
-export default function MovieCredits({ movie }) {
+function MovieCredits({ match }) {
   const [cast, setCast] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    CallApi.get(`/movie/${movie.id}/credits`)
+    CallApi.get(`/movie/${match.params.id}/credits`)
       .then(credits => setCast(credits.cast))
       .then(() => setLoading(false));
-  }, [movie.id]);
+  }, [match.params.id]);
 
-  return loading ? (
-    <Spinner />
-  ) : (
+  if (loading) {
+    return <Spinner />;
+  }
+
+  return (
     <div className="row">
       {cast.map(actor => (
         <div key={actor.id} className="col col-md-2 mb-3">
@@ -34,3 +37,5 @@ export default function MovieCredits({ movie }) {
     </div>
   );
 }
+
+export default withRouter(MovieCredits);

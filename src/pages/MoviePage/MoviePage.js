@@ -1,116 +1,99 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink as RRNavLink } from 'react-router-dom';
-import classnames from 'classnames';
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import { Switch, Route } from 'react-router-dom';
+import { Nav, TabContent, TabPane } from 'reactstrap';
 
 import Spinner from '../../components/UIComponents/Spinner';
 import MovieDescription from './MovieDescription';
+import MovieNavItem from './MovieNavItem';
 import MovieDetail from './MovieDetail';
 import MovieVideos from './MovieVideos';
 import MovieCredits from './MovieCredits';
 import AppContextHOC from '../../components/HOC/AppContextHOC';
 import CallApi from '../../api/api';
 
-class MoviePage extends React.Component {
-  static propTypes = {
-    movie: PropTypes.array,
-    activeTab: PropTypes.string,
-    loading: PropTypes.bool,
-  };
+const dataTabs = [
+  { id: 0, title: 'detail', text: 'Детали' },
+  { id: 1, title: 'videos', text: 'Видео' },
+  { id: 2, title: 'credits', text: 'Актёры' },
+];
 
-  state = {
+function MoviePage({ match, history }) {
+  const [state, setState] = useState({
     loading: true,
     movie: {},
-    activeTab: null,
+  });
+
+  const toggleTab = tab => {
+    if (state.activeTab !== tab) {
+      setState(prevState => ({ ...prevState, activeTab: tab }));
+    }
   };
 
-  toggleTab = tab => {
-    if (this.state.activeTab !== tab) this.setState({ activeTab: tab });
-  };
+  useEffect(() => {
+    const id = match.params.id;
+    const { pathname } = history.location;
 
-  componentDidMount() {
-    const { match } = this.props;
-
-    CallApi.get(`/movie/${match.params.id}`)
-      .then(movie => this.setState({ movie }))
-      .then(() => {
-        this.setState(prevState => ({
-          activeTab: match.params.tab ? match.params.tab : 'detail',
-          loading: false,
-        }));
-      });
-  }
-
-  render() {
-    const { movie, activeTab, loading } = this.state;
-    const { match } = this.props;
-
-    return (
-      <div className="container-fluid">
-        {loading ? (
-          <Spinner className="spinner--center" />
-        ) : (
-          <>
-            <MovieDescription movie={movie} />
-
-            <Nav tabs>
-              <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  to={`/movie/${match.params.id}/detail`}
-                  className={classnames('nav-link', {
-                    active: activeTab === 'detail',
-                  })}
-                  onClick={() => {
-                    this.toggleTab('detail');
-                  }}
-                >
-                  Детали
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  to={`/movie/${match.params.id}/videos`}
-                  className="nav-link"
-                  onClick={() => {
-                    this.toggleTab('videos');
-                  }}
-                >
-                  Видео
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  tag={RRNavLink}
-                  to={`/movie/${match.params.id}/credits`}
-                  className="nav-link"
-                  onClick={() => {
-                    this.toggleTab('credits');
-                  }}
-                >
-                  Актёры
-                </NavLink>
-              </NavItem>
-            </Nav>
-
-            <TabContent activeTab={activeTab} className="pt-3">
-              <TabPane id="detail">
-                {activeTab === 'detail' && <MovieDetail movie={movie} />}
-              </TabPane>
-              <TabPane id="videos">
-                {activeTab === 'videos' && <MovieVideos movie={movie} />}
-              </TabPane>
-              <TabPane id="credits">
-                {activeTab === 'credits' && <MovieCredits movie={movie} />}
-              </TabPane>
-            </TabContent>
-          </>
-        )}
-      </div>
+    CallApi.get(`/movie/${id}`).then(movie =>
+      setState(prevState => ({
+        ...prevState,
+        movie: movie,
+        loading: !prevState.loading,
+      }))
     );
-  }
+
+    if (`/movie/${id}/` === pathname || `/movie/${id}` === pathname) {
+      history.push(`/movie/${id}/detail`);
+    }
+  }, [match.params.id, setState, history]);
+
+  return (
+    <div className="container-fluid">
+      {state.loading ? (
+        <Spinner className="spinner--center" />
+      ) : (
+        <>
+          <MovieDescription movie={state.movie} />
+
+          <Nav tabs active={state.activeTab}>
+            {dataTabs.map(({ id, title, text }) => {
+              return (
+                <MovieNavItem
+                  key={id}
+                  onChange={toggleTab}
+                  title={title}
+                  text={text}
+                />
+              );
+            })}
+          </Nav>
+
+          <TabContent className="pt-3">
+            <TabPane>
+              <Switch>
+                <Route path="/movie/:id/detail">
+                  <MovieDetail movie={state.movie} />
+                </Route>
+                <Route path="/movie/:id/videos">
+                  <MovieVideos movie={state.movie} />
+                </Route>
+                <Route path="/movie/:id/credits">
+                  <MovieCredits movie={state.movie} />
+                </Route>
+              </Switch>
+            </TabPane>
+          </TabContent>
+        </>
+      )}
+    </div>
+  );
 }
+
+MoviePage.propTypes = {
+  match: PropTypes.object.isRequired,
+  movie: PropTypes.array,
+  activeTab: PropTypes.string,
+  loading: PropTypes.bool,
+};
 
 export default AppContextHOC(MoviePage);
