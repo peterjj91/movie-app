@@ -1,12 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { useCast } from '../../../libs/hooksLib';
+import { useCast } from '../../../libs/hooks';
 import { IMAGE_URL } from '../../../api/api';
 
 import Spinner from '../../../components/UIComponents/Spinner';
 
 function MovieCredits() {
-  const [loading, data] = useCast('credits');
+  const [loading, cast] = useCast('credits');
 
   if (loading) {
     return <Spinner />;
@@ -14,7 +14,7 @@ function MovieCredits() {
 
   return (
     <div className="row">
-      {data.cast.map(actor => (
+      {cast.map(actor => (
         <div key={actor.id} className="col col-md-2 mb-3">
           <div className="mb-3">
             <img

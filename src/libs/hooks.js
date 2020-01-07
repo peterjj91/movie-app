@@ -9,7 +9,14 @@ export function useCast(query) {
 
   useEffect(() => {
     CallApi.get(`/movie/${params.id}/${query}`)
-      .then(collection => setData(collection))
+      .then(collection => {
+        switch (query) {
+          case 'credits':
+            return setData(collection.cast);
+          default:
+            return setData(collection.results);
+        }
+      })
       .then(() => setLoading(false));
   }, [params.id, query]);
 

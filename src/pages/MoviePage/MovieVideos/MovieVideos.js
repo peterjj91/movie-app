@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { useCast } from '../../../libs/hooksLib';
-// import CallApi from '../../../api/api';
+import { useCast } from '../../../libs/hooks';
 
 import Spinner from '../../../components/UIComponents/Spinner';
 
@@ -14,7 +13,7 @@ function MovieVideos() {
 
   return (
     <div className="row">
-      {videos.results.map(video => {
+      {videos.map(video => {
         return (
           <div className="col-12 col-md-6" key={video.key}>
             <div className="embed-responsive embed-responsive-16by9 mb-3">
