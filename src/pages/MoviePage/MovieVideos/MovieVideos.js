@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
-import CallApi from '../../../api/api';
+import { useCast } from '../../../libs/hooksLib';
+// import CallApi from '../../../api/api';
 
 import Spinner from '../../../components/UIComponents/Spinner';
 
-function MovieVideos({ match }) {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    CallApi.get(`/movie/${match.params.id}/videos`)
-      .then(videos => setVideos(videos.results))
-      .then(() => setLoading(false));
-  }, [match.params.id]);
+function MovieVideos() {
+  const [loading, videos] = useCast('videos');
 
   if (loading) {
     return <Spinner />;
@@ -20,7 +14,7 @@ function MovieVideos({ match }) {
 
   return (
     <div className="row">
-      {videos.map(video => {
+      {videos.results.map(video => {
         return (
           <div className="col-12 col-md-6" key={video.key}>
             <div className="embed-responsive embed-responsive-16by9 mb-3">
