@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Cookies from 'universal-cookie';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
+import {
+  actionCreatorUpdateAuth,
+  actionCreatorLogOut,
+} from '../../actions/actions';
 import MoviesPage from '../../pages/MoviesPage';
 import MoviePage from '../../pages/MoviePage';
 import Header from './../Header';
 import Login from '../Login';
 import CallApi from './../../api/api';
-
-const cookies = new Cookies();
 
 export const AppContext = React.createContext();
 
@@ -19,10 +21,6 @@ class App extends Component {
     super();
 
     this.initialState = {
-      auth: {
-        user: null,
-        session_id: null,
-      },
       showModal: false,
       favoriteMovies: [],
       moviesWatchlist: [],
@@ -32,22 +30,16 @@ class App extends Component {
   }
 
   updateAuth = ({ user, session_id }) => {
-    this.setState(prevState => ({
-      auth: {
-        ...prevState.auth,
+    this.props.store.dispatch(
+      actionCreatorUpdateAuth({
         user,
         session_id,
-      },
-    }));
-
-    cookies.set('session_id', session_id, {
-      path: '/',
-      maxAge: 2592000,
-    });
+      })
+    );
   };
 
   onLogOut = () => {
-    cookies.remove('session_id');
+    this.props.store.dispatch(actionCreatorLogOut());
   };
 
   toggleModalLogin = () =>
@@ -76,42 +68,47 @@ class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      loadingFavoriteMovies,
-      loadingMoviesWatchlist,
-      auth: { user, session_id },
-    } = this.state;
+    const { auth } = this.props.store.getState();
+    const { loadingFavoriteMovies, loadingMoviesWatchlist } = this.state;
 
-    if (!_.isEqual(prevState.auth, this.state.auth) && user) {
-      this.getFavoriteMovies(user, session_id);
-      this.getMoviesWatchlist(user, session_id);
+    if (!_.isEqual(prevState.auth, auth) && auth.user) {
+      this.getFavoriteMovies(auth.user, auth.session_id);
+      this.getMoviesWatchlist(auth.user, auth.session_id);
     }
 
     // delete movies on logout
-    if (!this.state.auth.session_id && prevState.auth.session_id) {
-      this.setState({
-        ...this.state,
-        favoriteMovies: [],
-        moviesWatchlist: [],
-      });
-    }
+    // if (!auth.session_id && prevState.auth.session_id) {
+    //   this.setState({
+    //     ...this.state,
+    //     favoriteMovies: [],
+    //     moviesWatchlist: [],
+    //   });
+    // }
 
     if (prevState.loadingFavoriteMovies !== loadingFavoriteMovies) {
-      this.getFavoriteMovies(user, session_id);
+      this.getFavoriteMovies(auth.user, auth.session_id);
     }
 
     if (prevState.loadingMoviesWatchlist !== loadingMoviesWatchlist) {
-      this.getMoviesWatchlist(user, session_id);
+      this.getMoviesWatchlist(auth.user, auth.session_id);
     }
   }
 
   componentDidMount() {
-    const session_id = cookies.get('session_id');
+    const { store } = this.props;
+    const {
+      auth: { session_id },
+    } = store.getState();
+
+    store.subscribe(() => {
+      console.log('change', store.getState());
+      this.forceUpdate();
+    });
 
     if (session_id && session_id !== 'null') {
       CallApi.get(`/account`, {
         params: {
-          session_id: session_id,
+          session_id,
         },
       }).then(user => {
         this.updateAuth({ user, session_id });
@@ -122,7 +119,8 @@ class App extends Component {
   }
 
   render() {
-    const { showModal, auth, favoriteMovies, moviesWatchlist } = this.state;
+    const { showModal, favoriteMovies, moviesWatchlist } = this.state;
+    const { auth } = this.props.store.getState();
 
     return (
       <AppContext.Provider
