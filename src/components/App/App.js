@@ -29,18 +29,18 @@ class App extends Component {
     this.state = this.initialState;
   }
 
-  updateAuth = ({ user, session_id }) => {
-    this.props.store.dispatch(
-      actionCreatorUpdateAuth({
-        user,
-        session_id,
-      })
-    );
-  };
+  // updateAuth = ({ user, session_id }) => {
+  //   this.props.store.dispatch(
+  //     actionCreatorUpdateAuth({
+  //       user,
+  //       session_id,
+  //     })
+  //   );
+  // };
 
-  onLogOut = () => {
-    this.props.store.dispatch(actionCreatorLogOut());
-  };
+  // onLogOut = () => {
+  //   this.props.store.dispatch(actionCreatorLogOut());
+  // };
 
   toggleModalLogin = () =>
     this.setState(prevState => ({
@@ -68,7 +68,7 @@ class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { auth } = this.props.store.getState();
+    const { auth } = this.props;
     const { loadingFavoriteMovies, loadingMoviesWatchlist } = this.state;
 
     if (!_.isEqual(prevState.auth, auth) && auth.user) {
@@ -95,15 +95,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { store } = this.props;
     const {
       auth: { session_id },
-    } = store.getState();
-
-    store.subscribe(() => {
-      console.log('change', store.getState());
-      this.forceUpdate();
-    });
+    } = this.props;
 
     if (session_id && session_id !== 'null') {
       CallApi.get(`/account`, {
@@ -111,7 +105,7 @@ class App extends Component {
           session_id,
         },
       }).then(user => {
-        this.updateAuth({ user, session_id });
+        this.props.updateAuth({ user, session_id });
         this.getFavoriteMovies(user, session_id);
         this.getMoviesWatchlist(user, session_id);
       });
@@ -120,14 +114,14 @@ class App extends Component {
 
   render() {
     const { showModal, favoriteMovies, moviesWatchlist } = this.state;
-    const { auth } = this.props.store.getState();
+    const { auth, updateAuth, onLogOut } = this.props;
 
     return (
       <AppContext.Provider
         value={{
           auth: auth,
-          updateAuth: this.updateAuth,
-          onLogOut: this.onLogOut,
+          updateAuth: updateAuth,
+          onLogOut: onLogOut,
           toggleModalLogin: this.toggleModalLogin,
           showModal: showModal,
           favoriteMovies: favoriteMovies,
@@ -162,4 +156,26 @@ App.propTypes = {
   moviesWatchlist: PropTypes.array,
 };
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateAuth: ({ user, session_id }) =>
+      dispatch(
+        actionCreatorUpdateAuth({
+          user,
+          session_id,
+        })
+      ),
+    onLogOut: () => dispatch(actionCreatorLogOut()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
