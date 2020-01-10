@@ -23,6 +23,7 @@
     "react-scripts": "^3.3.0",
     "reactstrap": "^8.1.1",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "universal-cookie": "^4.0.2"
   },
   "scripts": {
