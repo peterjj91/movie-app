@@ -19,14 +19,14 @@ export const toggleModalLogin = payload => {
 
 export const updateFavoriteMovies = movies => {
   return {
-    type: "UPDATE_FAVORITE_MOVIES",
-    payload: movies
+    type: 'UPDATE_FAVORITE_MOVIES',
+    payload: movies,
   };
 };
 
 export const updateMoviesWatchlist = movies => {
   return {
-    type: "UPDATE_MOVIES_WATCHLIST",
-    payload: movies
+    type: 'UPDATE_MOVIES_WATCHLIST',
+    payload: movies,
   };
 };
