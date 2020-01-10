@@ -6,15 +6,11 @@ import UserMenu from './UserMenu';
 
 class Header extends Component {
   static propTypes = {
-    auth: PropTypes.object,
     toggleModalLogin: PropTypes.func.isRequired,
   };
 
   render() {
-    const {
-      toggleModalLogin,
-      auth: { user },
-    } = this.props;
+    const { toggleModalLogin, user } = this.props;
 
     return (
       <nav className="navbar navbar-dark bg-primary mb-4">

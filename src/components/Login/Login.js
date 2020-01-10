@@ -7,15 +7,15 @@ import LoginForm from './LoginForm';
 
 class Login extends Component {
   static propTypes = {
-    showModal: PropTypes.bool,
+    showLoginModal: PropTypes.bool,
     toggleModalLogin: PropTypes.func,
   };
 
   render() {
-    const { showModal, toggleModalLogin } = this.props;
+    const { showLoginModal, toggleModalLogin } = this.props;
 
     return (
-      <Modal isOpen={showModal} toggle={toggleModalLogin}>
+      <Modal isOpen={showLoginModal} toggle={toggleModalLogin}>
         <ModalBody>
           <LoginForm />
         </ModalBody>

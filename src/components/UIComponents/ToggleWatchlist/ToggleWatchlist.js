@@ -7,7 +7,8 @@ import AppContextHOC from '../../HOC/AppContextHOC';
 
 function ToggleWatchlist({
   id,
-  auth,
+  user,
+  session_id,
   moviesWatchlist,
   toggleModalLogin,
   getMoviesWatchlist,
@@ -16,7 +17,6 @@ function ToggleWatchlist({
 }) {
   const isMovieWatchlist = moviesWatchlist.some(film => film.id === id);
   const [isSelected, setIsSelected] = useState(false);
-  const { user, session_id } = auth;
 
   useEffect(() => {
     setIsSelected(isMovieWatchlist);
@@ -62,7 +62,6 @@ function ToggleWatchlist({
 
 ToggleWatchlist.propTypes = {
   id: PropTypes.number.isRequired,
-  auth: PropTypes.object,
   moviesWatchlist: PropTypes.array,
   toggleModalLogin: PropTypes.func,
   getMoviesWatchlist: PropTypes.func,

@@ -15,7 +15,6 @@ class UserMenu extends React.Component {
   };
 
   static propTypes = {
-    auth: PropTypes.object,
     onLogOut: PropTypes.func,
     updateAuth: PropTypes.func,
   };
@@ -29,7 +28,7 @@ class UserMenu extends React.Component {
   handleLogOut = () => {
     CallApi.delete('/authentication/session', {
       body: {
-        session_id: this.props.auth.session_id,
+        session_id: this.props.session_id,
       },
     }).then(() => {
       this.props.onLogOut();
@@ -38,9 +37,7 @@ class UserMenu extends React.Component {
   };
 
   render() {
-    const {
-      auth: { user },
-    } = this.props;
+    const { user } = this.props;
 
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>

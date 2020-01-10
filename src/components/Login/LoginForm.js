@@ -97,7 +97,7 @@ class LoginForm extends React.Component {
         });
       })
       .then(user => {
-        const { session_id } = this.props.auth;
+        const { session_id } = this.props;
 
         this.setState(
           {

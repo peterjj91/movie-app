@@ -7,7 +7,8 @@ import AppContextHOC from '../../HOC/AppContextHOC';
 
 function ToggleFavorite({
   id,
-  auth,
+  user,
+  session_id,
   favoriteMovies,
   toggleModalLogin,
   getFavoriteMovies,
@@ -16,7 +17,6 @@ function ToggleFavorite({
 }) {
   const isMovieFavorite = favoriteMovies.some(film => film.id === id);
   const [isSelected, setIsSelected] = useState(false);
-  const { user, session_id } = auth;
 
   useEffect(() => {
     setIsSelected(isMovieFavorite);
@@ -58,7 +58,6 @@ function ToggleFavorite({
 
 ToggleFavorite.propTypes = {
   id: PropTypes.number.isRequired,
-  auth: PropTypes.object,
   favoriteMovies: PropTypes.array,
   toggleModalLogin: PropTypes.func,
   getFavoriteMovies: PropTypes.func,
