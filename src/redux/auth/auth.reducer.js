@@ -1,5 +1,7 @@
 import Cookies from 'universal-cookie';
 
+import * as types from './auth.types';
+
 const cookies = new Cookies();
 
 const initialState = {
@@ -12,7 +14,7 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case 'UPDATE_AUTH':
+    case types.UPDATE_AUTH:
       cookies.set('session_id', action.payload.session_id, {
         path: '/',
         maxAge: 2592000,
@@ -22,7 +24,7 @@ const auth = (state = initialState, action) => {
         user: action.payload.user,
         session_id: action.payload.session_id,
       };
-    case 'LOGOUT':
+    case types.LOGOUT:
       cookies.remove('session_id');
       return {
         ...state,
@@ -30,17 +32,17 @@ const auth = (state = initialState, action) => {
         session_id: null,
         favoriteMovies: [],
       };
-    case 'SHOW_LOGIN_MODAL':
+    case types.SHOW_LOGIN_MODAL:
       return {
         ...state,
         showLoginModal: !state.showLoginModal,
       };
-    case 'UPDATE_FAVORITE_MOVIES':
+    case types.UPDATE_FAVORITE_MOVIES:
       return {
         ...state,
         favoriteMovies: action.payload,
       };
-    case 'UPDATE_MOVIES_WATCHLIST':
+    case types.UPDATE_MOVIES_WATCHLIST:
       return {
         ...state,
         moviesWatchlist: action.payload,

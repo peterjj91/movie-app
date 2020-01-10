@@ -11,7 +11,7 @@ import {
   toggleModalLogin,
   updateFavoriteMovies,
   updateMoviesWatchlist,
-} from '../../actions/actions';
+} from '../../redux/auth/auth.actions';
 import MoviesPage from '../../pages/MoviesPage';
 import MoviePage from '../../pages/MoviePage';
 import Header from './../Header';
