@@ -11,44 +11,25 @@ import {
   toggleModalLogin,
   updateFavoriteMovies,
   updateMoviesWatchlist,
-} from '../../redux/auth/auth.actions';
-import MoviesPage from '../../pages/MoviesPage';
-import MoviePage from '../../pages/MoviePage';
-import Header from './../Header';
-import Login from '../Login';
-import CallApi from './../../api/api';
+  fetchAuth,
+  fetchFavoriteMovies,
+} from '../redux/auth/auth.actions';
+import MoviesPage from '../pages/MoviesPage';
+import MoviePage from '../pages/MoviePage';
+import Header from './Header';
+import Login from './Login';
 
 export const AppContext = React.createContext();
 
 class App extends Component {
-  getFavoriteMovies = ({ user, session_id }) => {
-    CallApi.get(`/account/${user.id}/favorite/movies`, {
-      params: {
-        session_id: session_id,
-      },
-    }).then(data => {
-      this.props.updateFavoriteMovies(data.results);
-    });
-  };
-
-  getMoviesWatchlist = ({ user, session_id }) => {
-    CallApi.get(`/account/${user.id}/watchlist/movies`, {
-      params: {
-        session_id: session_id,
-      },
-    }).then(data => {
-      this.props.updateMoviesWatchlist(data.results);
-    });
-  };
-
   componentDidUpdate(prevProps, prevState) {
     const { user, session_id } = this.props;
     // const { loadingFavoriteMovies, loadingMoviesWatchlist } = this.state;
 
     if (!_.isEqual(prevProps.user, user)) {
       // console.log(prevState.user, user);
-      // this.getFavoriteMovies({ user, session_id });
-      // this.getMoviesWatchlist(user, session_id);
+      // this.fetchFavoriteMovies({ user, session_id });
+      // this.fetchMoviesWatchlist({user, session_id});
     }
 
     // delete movies on logout
@@ -57,27 +38,19 @@ class App extends Component {
     }
 
     // if (prevState.loadingFavoriteMovies !== loadingFavoriteMovies) {
-    //   this.getFavoriteMovies(user, session_id);
+    //   this.fetchFavoriteMovies(user, session_id);
     // }
 
     // if (prevState.loadingMoviesWatchlist !== loadingMoviesWatchlist) {
-    //   this.getMoviesWatchlist(user, session_id);
+    //   this.fetchMoviesWatchlist(user, session_id);
     // }
   }
 
   componentDidMount() {
-    const { session_id } = this.props;
+    const { session_id, fetchAuth } = this.props;
 
     if (session_id && session_id !== 'null') {
-      CallApi.get(`/account`, {
-        params: {
-          session_id,
-        },
-      }).then(user => {
-        this.props.updateAuth({ user, session_id });
-        this.getFavoriteMovies({ user, session_id });
-        this.getMoviesWatchlist({ user, session_id });
-      });
+      fetchAuth({ session_id });
     }
   }
 
@@ -91,6 +64,8 @@ class App extends Component {
       toggleModalLogin,
       favoriteMovies,
       moviesWatchlist,
+      fetchFavoriteMovies,
+      fetchMoviesWatchlist,
     } = this.props;
 
     return (
@@ -104,8 +79,8 @@ class App extends Component {
           showLoginModal: showLoginModal,
           favoriteMovies: favoriteMovies,
           moviesWatchlist: moviesWatchlist,
-          getFavoriteMovies: this.props.getFavoriteMovies,
-          getMoviesWatchlist: this.props.getMoviesWatchlist,
+          fetchFavoriteMovies: fetchFavoriteMovies,
+          fetchMoviesWatchlist: fetchMoviesWatchlist,
         }}
       >
         <Router>
@@ -156,6 +131,8 @@ const mapDispatchToProps = {
   toggleModalLogin,
   updateFavoriteMovies,
   updateMoviesWatchlist,
+  fetchAuth,
+  fetchFavoriteMovies,
 };
 
 export default connect(

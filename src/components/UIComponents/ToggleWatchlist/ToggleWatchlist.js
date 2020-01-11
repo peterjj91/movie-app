@@ -11,7 +11,7 @@ function ToggleWatchlist({
   session_id,
   moviesWatchlist,
   toggleModalLogin,
-  getMoviesWatchlist,
+  fetchMoviesWatchlist,
   children,
   className,
 }) {
@@ -43,7 +43,7 @@ function ToggleWatchlist({
         setIsSelected(!isSelected);
       })
       .then(() => {
-        getMoviesWatchlist(user, session_id);
+        fetchMoviesWatchlist(user, session_id);
       })
       .catch(error => {
         console.log('onToggleWatchlist error -', error);
@@ -64,7 +64,7 @@ ToggleWatchlist.propTypes = {
   id: PropTypes.number.isRequired,
   moviesWatchlist: PropTypes.array,
   toggleModalLogin: PropTypes.func,
-  getMoviesWatchlist: PropTypes.func,
+  fetchMoviesWatchlist: PropTypes.func,
   children: PropTypes.string,
   className: PropTypes.string,
 };

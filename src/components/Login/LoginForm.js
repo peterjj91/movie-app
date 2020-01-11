@@ -21,7 +21,6 @@ class LoginForm extends React.Component {
 
   static propTypes = {
     updateAuth: PropTypes.func.isRequired,
-    getMoviesWatchlist: PropTypes.func,
     toggleModalLogin: PropTypes.func,
   };
 

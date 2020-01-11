@@ -11,7 +11,7 @@ function ToggleFavorite({
   session_id,
   favoriteMovies,
   toggleModalLogin,
-  getFavoriteMovies,
+  fetchFavoriteMovies,
   children,
   className,
 }) {
@@ -41,7 +41,7 @@ function ToggleFavorite({
         setIsSelected(!isSelected);
       })
       .then(() => {
-        getFavoriteMovies(user, session_id);
+        fetchFavoriteMovies(user, session_id);
       })
       .catch(error => {
         console.log('onToggleFavorite error -', error);
@@ -60,7 +60,7 @@ ToggleFavorite.propTypes = {
   id: PropTypes.number.isRequired,
   favoriteMovies: PropTypes.array,
   toggleModalLogin: PropTypes.func,
-  getFavoriteMovies: PropTypes.func,
+  fetchFavoriteMovies: PropTypes.func,
   children: PropTypes.string,
   className: PropTypes.string,
 };
