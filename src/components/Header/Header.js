@@ -7,6 +7,7 @@ import UserMenu from './UserMenu';
 class Header extends Component {
   static propTypes = {
     toggleModalLogin: PropTypes.func.isRequired,
+    user: PropTypes.object,
   };
 
   render() {

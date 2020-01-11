@@ -13,6 +13,7 @@ import {
   updateMoviesWatchlist,
   fetchAuth,
   fetchFavoriteMovies,
+  fetchMoviesWatchlist,
 } from '../redux/auth/auth.actions';
 import MoviesPage from '../pages/MoviesPage';
 import MoviePage from '../pages/MoviePage';
@@ -23,26 +24,31 @@ export const AppContext = React.createContext();
 
 class App extends Component {
   componentDidUpdate(prevProps, prevState) {
-    const { user, session_id } = this.props;
+    const {
+      user,
+      session_id,
+      onLogOut,
+      fetchFavoriteMovies,
+      fetchMoviesWatchlist,
+    } = this.props;
     // const { loadingFavoriteMovies, loadingMoviesWatchlist } = this.state;
 
-    if (!_.isEqual(prevProps.user, user)) {
-      // console.log(prevState.user, user);
-      // this.fetchFavoriteMovies({ user, session_id });
-      // this.fetchMoviesWatchlist({user, session_id});
+    if (!_.isEqual(prevProps.user, user) && user) {
+      fetchFavoriteMovies({ user, session_id });
+      fetchMoviesWatchlist({ user, session_id });
     }
 
     // delete movies on logout
-    if (!session_id && prevState.session_id) {
-      this.props.onLogOut();
+    if (!session_id && prevProps.session_id) {
+      onLogOut();
     }
 
-    // if (prevState.loadingFavoriteMovies !== loadingFavoriteMovies) {
-    //   this.fetchFavoriteMovies(user, session_id);
+    // if (prevProps.loadingFavoriteMovies !== loadingFavoriteMovies) {
+    //   fetchFavoriteMovies({ user, session_id });
     // }
 
-    // if (prevState.loadingMoviesWatchlist !== loadingMoviesWatchlist) {
-    //   this.fetchMoviesWatchlist(user, session_id);
+    // if (prevProps.loadingMoviesWatchlist !== loadingMoviesWatchlist) {
+    //   fetchMoviesWatchlist({ user, session_id });
     // }
   }
 
@@ -106,6 +112,14 @@ App.propTypes = {
   showLoginModal: PropTypes.bool,
   favoriteMovies: PropTypes.array,
   moviesWatchlist: PropTypes.array,
+  session_id: PropTypes.string,
+  user: PropTypes.object,
+  fetchAuth: PropTypes.func,
+  updateAuth: PropTypes.func,
+  onLogOut: PropTypes.func,
+  toggleModalLogin: PropTypes.func,
+  fetchFavoriteMovies: PropTypes.func,
+  fetchMoviesWatchlist: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -133,6 +147,7 @@ const mapDispatchToProps = {
   updateMoviesWatchlist,
   fetchAuth,
   fetchFavoriteMovies,
+  fetchMoviesWatchlist,
 };
 
 export default connect(

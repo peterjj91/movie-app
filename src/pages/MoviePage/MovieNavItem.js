@@ -22,7 +22,7 @@ MovieNavItem.propTypes = {
   match: PropTypes.object.isRequired,
   title: PropTypes.string,
   text: PropTypes.string,
-  onChage: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 export default withRouter(MovieNavItem);

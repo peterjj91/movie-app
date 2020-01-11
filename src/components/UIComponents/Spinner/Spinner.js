@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 export default function Spinner({ className }) {
@@ -15,3 +16,7 @@ export default function Spinner({ className }) {
     </div>
   );
 }
+
+Spinner.propTypes = {
+  className: PropTypes.string,
+};

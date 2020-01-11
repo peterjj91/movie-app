@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { IMAGE_URL } from '../../../api/api';
 
@@ -12,3 +13,7 @@ export default function Image({ poster_path, ...rest }) {
     />
   );
 }
+
+Image.propTypes = {
+  poster_path: PropTypes.string,
+};

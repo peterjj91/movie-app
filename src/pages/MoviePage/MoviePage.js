@@ -94,6 +94,7 @@ MoviePage.propTypes = {
   movie: PropTypes.array,
   activeTab: PropTypes.string,
   loading: PropTypes.bool,
+  history: PropTypes.object,
 };
 
 export default AppContextHOC(MoviePage);

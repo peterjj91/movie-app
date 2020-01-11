@@ -1,8 +1,5 @@
-import Cookies from 'universal-cookie';
-
 import * as types from './auth.types';
-
-const cookies = new Cookies();
+import { cookies } from '../../utils/cookies';
 
 const initialState = {
   user: null,
@@ -14,23 +11,19 @@ const initialState = {
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    case types.UPDATE_AUTH:
-      cookies.set('session_id', action.payload.session_id, {
-        path: '/',
-        maxAge: 2592000,
-      });
+    case types.FETCH_SUCCESS_AUTH:
       return {
         ...state,
         user: action.payload.user,
         session_id: action.payload.session_id,
       };
     case types.LOGOUT:
-      cookies.remove('session_id');
       return {
         ...state,
         user: null,
         session_id: null,
         favoriteMovies: [],
+        moviesWatchlist: [],
       };
     case types.SHOW_LOGIN_MODAL:
       return {

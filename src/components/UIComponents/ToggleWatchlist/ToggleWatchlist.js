@@ -61,6 +61,8 @@ function ToggleWatchlist({
 }
 
 ToggleWatchlist.propTypes = {
+  user: PropTypes.object,
+  session_id: PropTypes.string,
   id: PropTypes.number.isRequired,
   moviesWatchlist: PropTypes.array,
   toggleModalLogin: PropTypes.func,

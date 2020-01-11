@@ -57,6 +57,8 @@ function ToggleFavorite({
 }
 
 ToggleFavorite.propTypes = {
+  user: PropTypes.object,
+  session_id: PropTypes.string,
   id: PropTypes.number.isRequired,
   favoriteMovies: PropTypes.array,
   toggleModalLogin: PropTypes.func,
